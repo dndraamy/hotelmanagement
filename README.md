@@ -154,7 +154,7 @@ Buka browser dan akses: **http://localhost:8000**
 ## Struktur Folder Penting
 
 ```
-hotel-enterprise/
+hotelmanagement/
 ├── app/
 │   ├── Http/
 │   │   ├── Controllers/     # Controller — logic setiap halaman/fitur
