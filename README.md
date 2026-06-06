@@ -68,8 +68,8 @@ Untuk mempermudah instalasi, sangat direkomendasikan menggunakan [**Laragon**](h
 ### 1. Clone Repository
 
 ```bash
-git clone <URL_REPOSITORY> hotel-enterprise
-cd hotel-enterprise
+git clone https://github.com/dndraamy/hotelmanagement.git
+cd hotelmanagement
 ```
 
 ### 2. Install Dependencies PHP
