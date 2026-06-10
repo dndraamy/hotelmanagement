@@ -17,4 +17,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+use App\Http\Controllers\HRD\JadwalShiftController;
+
+Route::middleware(['auth', 'role:HRD'])->prefix('hrd')->name('hrd.')->group(function () {
+    Route::resource('jadwal-shift', JadwalShiftController::class)->except(['show']);
+});
+
 require __DIR__.'/auth.php';
