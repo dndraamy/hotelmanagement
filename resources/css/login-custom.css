@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+    --font-main: 'Montserrat', sans-serif;
+
+    --color-bg-body: #D3B995;
+    --color-bg-primary: #1E382A;
+    --color-bg-paper: #E2DACB;
+    --color-bg-input: #172B20;
+    --color-bg-btn: #2F5F4E;
+    --color-bg-btn-hover: #3A705D;
+
+    --color-text-light: #FAF9F6;
+    --color-text-label: #A5C0B2;
+    --color-text-footer: #8CA99A;
+    
+    --color-link: #558D76;
+    --color-link-hover: #72B89C;
+    --color-border-focus: #356F5A;
+}
+
+body {
+    font-family: var(--font-main) !important;
+    background-color: var(--color-bg-body); 
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.login-card-container {
+    background-color: var(--color-bg-primary);
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    max-width: 1100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.login-left-side {
+    background-color: var(--color-bg-paper);
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 2rem;
+    box-shadow: 15px 0 30px rgba(0,0,0,0.15); 
+    z-index: 5;
+}
+
+.brand-logo {
+    position: absolute;
+    top: 2.5rem;
+    left: 2.5rem;
+    max-width: 160px;
+}
+.brand-logo img {
+    width: 100%;
+    height: auto;
+}
+
+.illustration-wrapper {
+    width: 80%;
+    max-width: 420px;
+    margin-top: 2rem;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2)); 
+}
+.illustration-wrapper img {
+    width: 100%;
+    height: auto;
+}
+
+.curve-divider {
+    display: none; 
+}
+
+.login-right-side {
+    background-color: var(--color-bg-primary); 
+    width: 100%;
+    padding: 3rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-wrapper {
+    width: 100%;
+    max-width: 380px;
+    z-index: 10;
+}
+
+.login-title {
+    color: var(--color-text-light);
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    font-family: serif;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    color: var(--color-text-label);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    background-color: var(--color-bg-input) !important;
+    border: 1px solid rgba(0, 0, 0, 0.5) !important;
+    border-radius: 20px !important;
+    padding: 0.85rem 1.2rem !important;
+    color: var(--color-text-light) !important;
+    font-size: 0.95rem;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.4);
+    transition: all 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--color-border-focus) !important;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.6), 0 0 0 2px rgba(53, 111, 90, 0.3) !important;
+}
+
+.forgot-password-align {
+    text-align: right;
+    margin-top: 0.5rem;
+}
+.forgot-link, .form-footer a, .terms-link a {
+    color: var(--color-link);
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+.forgot-link:hover, .form-footer a:hover {
+    text-decoration: underline;
+    color: var(--color-link-hover);
+}
+
+.btn-login {
+    width: 100%;
+    background-color: var(--color-bg-btn) !important; 
+    color: var(--color-text-light) !important;
+    border: none;
+    border-radius: 20px;
+    padding: 0.9rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.1); /* Efek tombol timbul 3D */
+    transition: all 0.3s;
+}
+
+.btn-login:hover {
+    background-color: var(--color-bg-btn-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.1);
+}
+
+.form-footer {
+    margin-top: 2rem;
+    text-align: center;
+    color: var(--color-text-footer);
+    font-size: 0.9rem;
+}
+.terms-link {
+    margin-top: 3rem;
+}
+
+@media (min-width: 992px) {
+    .login-card-container {
+        flex-direction: row;
+        min-height: 650px;
+    }
+
+    .login-left-side {
+        width: 55%;
+        padding-right: 5rem;
+    }
+
+    .login-right-side {
+        width: 45%;
+        padding: 4rem;
+    }
+
+    .curve-divider {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: -140px; 
+        width: 145px; 
+        height: 100%;
+        z-index: -1;
+        filter: drop-shadow(-10px 0 15px rgba(0,0,0,0.5)); 
+    }
+
+    .curve-divider svg {
+        width: 100%;
+        height: 100%;
+    }
+}
