@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
 public function boot(): void
 {
-    View::composer('layouts.inventory', function ($view) {
+    View::composer(['layouts.inventory', 'layouts.app'], function ($view) {
 
         $stokMenipisList = Barang::whereColumn(
             'stok_sekarang',

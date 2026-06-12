@@ -56,7 +56,6 @@ tailwind.config = {
                 }
             }
         }
-    }
     </script>
 
     <style>

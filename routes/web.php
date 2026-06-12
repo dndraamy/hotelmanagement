@@ -35,5 +35,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])
         ->name('inventory.laporan');
 
+    Route::get('/pegawai/create', [\App\Http\Controllers\PegawaiController::class, 'create'])
+        ->name('pegawai.create');
+    Route::post('/pegawai', [\App\Http\Controllers\PegawaiController::class, 'store'])
+        ->name('pegawai.store');
 });
 require __DIR__.'/auth.php';
