@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\HRD\JadwalShiftController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,10 +20,31 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-use App\Http\Controllers\HRD\JadwalShiftController;
 
-Route::middleware(['auth', 'role:HRD'])->prefix('hrd')->name('hrd.')->group(function () {
+Route::middleware(['auth'])->prefix('hrd')->name('hrd.')->group(function () {
     Route::resource('jadwal-shift', JadwalShiftController::class)->except(['show']);
 });
 
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/inventory', [InventoryController::class, 'index'])
+        ->name('inventory.index');
+
+    Route::get('/inventory/mutasi', [InventoryController::class, 'mutasi'])
+        ->name('inventory.mutasi');
+
+    Route::post('/inventory/masuk', [InventoryController::class, 'barangMasuk'])
+        ->name('inventory.masuk');
+
+    Route::post('/inventory/keluar', [InventoryController::class, 'barangKeluar'])
+        ->name('inventory.keluar');
+
+    Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])
+        ->name('inventory.laporan');
+
+    Route::get('/pegawai/create', [\App\Http\Controllers\PegawaiController::class, 'create'])
+        ->name('pegawai.create');
+    Route::post('/pegawai', [\App\Http\Controllers\PegawaiController::class, 'store'])
+        ->name('pegawai.store');
+});
 require __DIR__.'/auth.php';
