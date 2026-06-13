@@ -42,9 +42,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])
         ->name('inventory.laporan');
 
+    Route::get('/pegawai', [\App\Http\Controllers\PegawaiController::class, 'index'])
+        ->name('pegawai.index');
     Route::get('/pegawai/create', [\App\Http\Controllers\PegawaiController::class, 'create'])
         ->name('pegawai.create');
     Route::post('/pegawai', [\App\Http\Controllers\PegawaiController::class, 'store'])
         ->name('pegawai.store');
+    Route::get('/pegawai/{pegawai}/edit', [\App\Http\Controllers\PegawaiController::class, 'edit'])
+        ->name('pegawai.edit');
+    Route::put('/pegawai/{pegawai}', [\App\Http\Controllers\PegawaiController::class, 'update'])
+        ->name('pegawai.update');
+    Route::delete('/pegawai/{pegawai}', [\App\Http\Controllers\PegawaiController::class, 'destroy'])
+        ->name('pegawai.destroy');
 });
 require __DIR__.'/auth.php';

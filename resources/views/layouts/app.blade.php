@@ -122,6 +122,15 @@
 
                 </a>
 
+                <a href="{{ route('pegawai.index') }}"
+                   class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('pegawai.*') ? 'sidebar-active' : '' }}">
+
+                    <i data-lucide="users" class="w-4 h-4"></i>
+
+                    <span>Daftar Pegawai</span>
+
+                </a>
+
             </nav>
 
         </div>
