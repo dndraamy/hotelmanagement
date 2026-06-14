@@ -40,4 +40,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])
         ->name('inventory.laporan');
 });
+
+use App\Http\Controllers\Manajer\LaporanKeuanganController;
+
+Route::middleware(['auth', 'role:Manajer'])->prefix('manajer')->name('manajer.')->group(function () {
+    Route::get('/laporan-keuangan', [LaporanKeuanganController::class, 'index'])
+         ->name('laporan-keuangan.index');
+});
 require __DIR__.'/auth.php';
