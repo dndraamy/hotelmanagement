@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+// use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\HRD\ApprovalCutiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -38,6 +39,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])
         ->name('inventory.laporan');
+
+    Route::prefix('hrd')->name('hrd.')->group(function () {
+        Route::get('/cuti',                           [ApprovalCutiController::class, 'index'])->name('cuti.index');
+        Route::get('/cuti/{pengajuanCuti}',           [ApprovalCutiController::class, 'show'])->name('cuti.show');
+        Route::patch('/cuti/{pengajuanCuti}/approve', [ApprovalCutiController::class, 'approve'])->name('cuti.approve');
+        Route::patch('/cuti/{pengajuanCuti}/reject',  [ApprovalCutiController::class, 'reject'])->name('cuti.reject');
+    });
 
 });
 require __DIR__.'/auth.php';
