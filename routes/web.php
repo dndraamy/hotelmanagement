@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\HRD\JadwalShiftController;
+use App\Http\Controllers\HRD\JadwalKerjaController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,6 +24,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->prefix('hrd')->name('hrd.')->group(function () {
     Route::resource('jadwal-shift', JadwalShiftController::class)->except(['show']);
+    Route::get('/jadwalkerja', [JadwalKerjaController::class, 'index'])->name('jadwalkerja');
 });
 
 Route::middleware(['auth'])->group(function () {
