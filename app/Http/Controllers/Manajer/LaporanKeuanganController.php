@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manajer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanKeuanganController extends Controller
 {
@@ -81,4 +82,56 @@ class LaporanKeuanganController extends Controller
             'stokMenipisList'
         ));
     }
+    public function exportPdf(Request $request)
+{
+    $bulan = $request->filled('bulan') ? $request->bulan : now()->month;
+    $tahun = $request->filled('tahun') ? $request->tahun : now()->year;
+
+    $pendapatan = DB::table('transaksi_kas')
+        ->select('kategori', DB::raw('SUM(nominal) as total'))
+        ->where('tipe_transaksi', 'Pemasukan')
+        ->whereMonth('tanggal_transaksi', $bulan)
+        ->whereYear('tanggal_transaksi', $tahun)
+        ->groupBy('kategori')
+        ->get();
+
+    $pengeluaran = DB::table('transaksi_kas')
+        ->select('kategori', DB::raw('SUM(nominal) as total'))
+        ->where('tipe_transaksi', 'Pengeluaran')
+        ->whereMonth('tanggal_transaksi', $bulan)
+        ->whereYear('tanggal_transaksi', $tahun)
+        ->groupBy('kategori')
+        ->get();
+        
+    $totalPendapatan = DB::table('transaksi_kas')
+        ->where('tipe_transaksi', 'Pemasukan')
+        ->whereMonth('tanggal_transaksi', $bulan)
+        ->whereYear('tanggal_transaksi', $tahun)
+        ->sum('nominal');
+
+    $totalPengeluaran = DB::table('transaksi_kas')
+        ->where('tipe_transaksi', 'Pengeluaran')
+        ->whereMonth('tanggal_transaksi', $bulan)
+        ->whereYear('tanggal_transaksi', $tahun)
+        ->sum('nominal');
+
+    $selisih = $totalPendapatan - $totalPengeluaran;
+
+    $pdf = Pdf::loadView(
+        'manajer.laporan-keuangan.pdf',
+        compact(
+            'pendapatan',
+            'pengeluaran',
+            'totalPendapatan',
+            'totalPengeluaran',
+            'selisih',
+            'bulan',
+            'tahun'
+        )
+    );
+
+    return $pdf->download(
+        'laporan-keuangan-' . $bulan . '-' . $tahun . '.pdf'
+    );
+}
 }

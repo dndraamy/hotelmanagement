@@ -48,7 +48,13 @@ Route::middleware(['auth', 'role:Manajer Hotel'])
     ->name('manajer.')
     ->group(function () {
 
-    Route::get('/laporan-keuangan', [LaporanKeuanganController::class, 'index'])
+Route::get('/laporan-keuangan', [LaporanKeuanganController::class, 'index'])
          ->name('laporan-keuangan.index');
+
+Route::get(
+    '/laporan-keuangan/export-pdf',
+    [LaporanKeuanganController::class, 'exportPdf']
+)->name('laporan-keuangan.export-pdf');
 });
+
 require __DIR__.'/auth.php';

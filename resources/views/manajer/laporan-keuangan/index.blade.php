@@ -64,6 +64,11 @@
                 </div>
                 <div style="padding-top:1.3rem;">
                     <button type="submit" class="btn-gold">Tampilkan</button>
+                     <a href="{{ route('manajer.laporan-keuangan.export-pdf', ['bulan' => $bulan,'tahun' => $tahun]) }}"
+                        class="btn-gold"
+                        style="text-decoration:none;">
+                           Download Laporan PDF
+                     </a>
                 </div>
             </div>
         </form>
