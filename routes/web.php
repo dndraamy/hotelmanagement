@@ -4,6 +4,7 @@
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\HRD\KehadiranController;
 use App\Http\Controllers\HRD\ApprovalCutiController;
+use App\Http\Controllers\Pegawai\PengajuanCutiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,6 +44,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/checkin', [KehadiranController::class, 'checkIn'])->name('checkin');
         Route::post('/checkout', [KehadiranController::class, 'checkOut'])->name('checkout');
     });
+
+    Route::get('/pegawai/form_pengajuan', [PengajuanCutiController::class, 'create'])->name('pegawai.cuti.create');
+    Route::post('/pegawai/form_pengajuan', [PengajuanCutiController::class, 'store'])->name('pegawai.cuti.store');
 
     Route::prefix('hrd')->name('hrd.')->group(function () {
         Route::get('/cuti',                           [ApprovalCutiController::class, 'index'])->name('cuti.index');
