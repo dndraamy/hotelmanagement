@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservasi extends Model
 {
-    protected $table = 'reservasi';
+    protected $table      = 'reservasi';
     protected $primaryKey = 'id_reservasi';
-    protected $fillable = ['id_tamu', 'tanggal_reservasi', 'tgl_checkin', 'tgl_checkout', 'status_reservasi'];
+
+    protected $fillable = [
+        'id_tamu',
+        'tanggal_reservasi',
+        'tgl_checkin',
+        'tgl_checkout',
+        'status_reservasi',
+    ];
 
     public function tamu()
     {

@@ -74,12 +74,18 @@
                     <td class="px-5 py-4 text-stone-600">{{ $item->tgl_checkin }}</td>
                     <td class="px-5 py-4 text-stone-600">{{ $item->tgl_checkout }}</td>
                     <td class="px-5 py-4">
-                        @if($item->status_reservasi == 'confirmed')
+                        @if($item->status_reservasi == 'Confirmed')
                             <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Confirmed</span>
-                        @elseif($item->status_reservasi == 'pending')
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">Pending</span>
-                        @else
+                        @elseif($item->status_reservasi == 'Menunggu DP')
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">Menunggu DP</span>
+                        @elseif($item->status_reservasi == 'Checked-In')
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">Checked-In</span>
+                        @elseif($item->status_reservasi == 'Checked-Out')
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 text-stone-600">Checked-Out</span>
+                        @elseif($item->status_reservasi == 'Cancelled')
                             <span class="px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">Cancelled</span>
+                        @else
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 text-stone-500">{{ $item->status_reservasi }}</span>
                         @endif
                     </td>
                     <td class="px-5 py-4 flex gap-2">
