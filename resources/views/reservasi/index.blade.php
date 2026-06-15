@@ -1,108 +1,118 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-            <div>
-                <p class="text-sm font-semibold uppercase tracking-[0.25em] text-indigo-500">Reservasi</p>
-                <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Dashboard Reservasi</h2>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Pantau status tamu, kamar, dan omzet reservasi secara cepat.</p>
-            </div>
-            <a href="{{ route('reservasi.create') }}"
-               class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400">
-                + Tambah Reservasi
-            </a>
+@extends('layouts.reservasi')
+
+@section('content')
+
+{{-- PAGE HEADER --}}
+<div>
+    <h1 class="text-2xl font-bold text-hotel-text">Dashboard Reservasi</h1>
+    <p class="text-sm text-stone-500 mt-1">Monitor dan kelola seluruh data reservasi tamu hotel.</p>
+</div>
+
+{{-- STATISTICS CARDS --}}
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <div class="bg-white rounded-2xl p-5 border border-stone-200 flex justify-between items-center">
+        <div>
+            <p class="text-[11px] uppercase tracking-widest text-stone-400 font-semibold">Total Reservasi</p>
+            <p class="text-3xl font-bold text-hotel-text mt-1">{{ $totalReservasi }}</p>
         </div>
-    </x-slot>
-
-    <div class="py-8">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4 mb-6">
-                <article class="rounded-3xl border border-indigo-100 bg-gradient-to-br from-indigo-600 via-indigo-500 to-blue-500 p-5 text-white shadow-xl shadow-indigo-500/20">
-                    <p class="text-sm text-indigo-100">Total Reservasi</p>
-                    <p class="mt-3 text-4xl font-bold">{{ $totalReservasi ?? 0 }}</p>
-                    <p class="mt-2 text-xs text-indigo-100/90">Jumlah keseluruhan booking aktif dan selesai.</p>
-                </article>
-                <article class="rounded-3xl border border-emerald-100 bg-gradient-to-br from-emerald-500 to-green-500 p-5 text-white shadow-xl shadow-emerald-500/20">
-                    <p class="text-sm text-emerald-100">Confirmed</p>
-                    <p class="mt-3 text-4xl font-bold">{{ $confirmedReservasi ?? 0 }}</p>
-                    <p class="mt-2 text-xs text-emerald-100/90">Reservasi yang sudah dikonfirmasi tamu.</p>
-                </article>
-                <article class="rounded-3xl border border-amber-100 bg-gradient-to-br from-amber-400 to-orange-400 p-5 text-white shadow-xl shadow-amber-500/20">
-                    <p class="text-sm text-amber-100">Pending</p>
-                    <p class="mt-3 text-4xl font-bold">{{ $pendingReservasi ?? 0 }}</p>
-                    <p class="mt-2 text-xs text-amber-100/90">Booking menunggu proses verifikasi.</p>
-                </article>
-                <article class="rounded-3xl border border-rose-100 bg-gradient-to-br from-rose-500 to-pink-500 p-5 text-white shadow-xl shadow-rose-500/20">
-                    <p class="text-sm text-rose-100">Cancelled</p>
-                    <p class="mt-3 text-4xl font-bold">{{ $cancelledReservasi ?? 0 }}</p>
-                    <p class="mt-2 text-xs text-rose-100/90">Reservasi yang dibatalkan atau tidak jadi.</p>
-                </article>
-            </div>
-
-            <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-                <div class="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                    <div>
-                        <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-100">Daftar Reservasi Terbaru</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Tabel ringkasan reservasi hari ini.</p>
-                    </div>
-                    <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                        <span class="rounded-full bg-slate-100 px-3 py-1 dark:bg-slate-800">Live data</span>
-                        <span class="rounded-full bg-emerald-100 px-3 py-1 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Update otomatis</span>
-                    </div>
-                </div>
-
-                <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
-                    <table class="min-w-full divide-y divide-slate-200 text-left text-sm dark:divide-slate-800">
-                        <thead class="bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-                            <tr>
-                                <th class="px-4 py-3 font-semibold uppercase tracking-wider">ID</th>
-                                <th class="px-4 py-3 font-semibold uppercase tracking-wider">Nama Tamu</th>
-                                <th class="px-4 py-3 font-semibold uppercase tracking-wider">Kamar</th>
-                                <th class="px-4 py-3 font-semibold uppercase tracking-wider">Check-in</th>
-                                <th class="px-4 py-3 font-semibold uppercase tracking-wider">Check-out</th>
-                                <th class="px-4 py-3 font-semibold uppercase tracking-wider">Status</th>
-                                <th class="px-4 py-3 font-semibold uppercase tracking-wider">Total Harga</th>
-                                <th class="px-4 py-3 font-semibold uppercase tracking-wider">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-800 dark:bg-slate-900">
-                            @forelse($reservasi ?? [] as $item)
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/80">
-                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-200">{{ $item->id ?? '-' }}</td>
-                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-200">{{ $item->nama_tamu ?? '-' }}</td>
-                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-200">{{ $item->nomor_kamar ?? '-' }}</td>
-                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-200">{{ $item->tanggal_checkin ?? '-' }}</td>
-                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-200">{{ $item->tanggal_checkout ?? '-' }}</td>
-                                    <td class="px-4 py-3">
-                                        @if($item->status_reservasi == 'confirmed')
-                                            <span class="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Confirmed</span>
-                                        @elseif($item->status_reservasi == 'pending')
-                                            <span class="inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">Pending</span>
-                                        @else
-                                            <span class="inline-flex rounded-full bg-rose-100 px-3 py-1 text-xs font-semibold text-rose-700 dark:bg-rose-900/40 dark:text-rose-300">Cancelled</span>
-                                        @endif
-                                    </td>
-                                    <td class="px-4 py-3 text-slate-700 dark:text-slate-200">Rp {{ number_format($item->total_harga ?? 0, 0, ',', '.') }}</td>
-                                    <td class="px-4 py-3">
-                                        <div class="flex flex-wrap items-center gap-2">
-                                            <a href="{{ route('reservasi.show', $item->id) }}" class="rounded-lg bg-sky-500 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-sky-600">Detail</a>
-                                            <a href="{{ route('reservasi.edit', $item->id) }}" class="rounded-lg bg-amber-400 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-amber-500">Edit</a>
-                                            <form action="{{ route('reservasi.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('Hapus reservasi ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="rounded-lg bg-rose-500 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-rose-600">Hapus</button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="8" class="px-4 py-10 text-center text-slate-500 dark:text-slate-400">Tidak ada data reservasi saat ini.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </div>
+        <i data-lucide="calendar" class="w-8 h-8 text-hotel-gold opacity-60"></i>
     </div>
-</x-app-layout>
+    <div class="bg-white rounded-2xl p-5 border border-stone-200 flex justify-between items-center">
+        <div>
+            <p class="text-[11px] uppercase tracking-widest text-stone-400 font-semibold">Confirmed</p>
+            <p class="text-3xl font-bold text-emerald-600 mt-1">{{ $confirmedReservasi }}</p>
+        </div>
+        <i data-lucide="check-circle" class="w-8 h-8 text-emerald-400 opacity-60"></i>
+    </div>
+    <div class="bg-white rounded-2xl p-5 border border-stone-200 flex justify-between items-center">
+        <div>
+            <p class="text-[11px] uppercase tracking-widest text-stone-400 font-semibold">Pending</p>
+            <p class="text-3xl font-bold text-yellow-500 mt-1">{{ $pendingReservasi }}</p>
+        </div>
+        <i data-lucide="clock" class="w-8 h-8 text-yellow-400 opacity-60"></i>
+    </div>
+    <div class="bg-white rounded-2xl p-5 border border-stone-200 flex justify-between items-center">
+        <div>
+            <p class="text-[11px] uppercase tracking-widest text-stone-400 font-semibold">Cancelled</p>
+            <p class="text-3xl font-bold text-red-500 mt-1">{{ $cancelledReservasi }}</p>
+        </div>
+        <i data-lucide="x-circle" class="w-8 h-8 text-red-400 opacity-60"></i>
+    </div>
+</div>
+
+{{-- TABLE --}}
+<div class="bg-white rounded-2xl border border-stone-200 overflow-hidden">
+    <div class="px-6 py-4 border-b border-stone-100 flex justify-between items-center">
+        <div>
+            <h3 class="font-bold text-hotel-text">Daftar Reservasi Terbaru</h3>
+            <p class="text-xs text-stone-400 mt-0.5">Semua data reservasi tamu</p>
+        </div>
+        <a href="{{ route('reservasi.create') }}"
+           class="flex items-center gap-2 bg-hotel-gold hover:bg-hotel-goldLight text-hotel-dark text-xs font-bold px-4 py-2 rounded-xl transition">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            Tambah Reservasi
+        </a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+            <thead class="bg-hotel-dark text-stone-300">
+                <tr>
+                    <th class="px-5 py-3 text-left text-[11px] uppercase tracking-wider font-semibold">ID</th>
+                    <th class="px-5 py-3 text-left text-[11px] uppercase tracking-wider font-semibold">Nama Tamu</th>
+                    <th class="px-5 py-3 text-left text-[11px] uppercase tracking-wider font-semibold">Check-in</th>
+                    <th class="px-5 py-3 text-left text-[11px] uppercase tracking-wider font-semibold">Check-out</th>
+                    <th class="px-5 py-3 text-left text-[11px] uppercase tracking-wider font-semibold">Status</th>
+                    <th class="px-5 py-3 text-left text-[11px] uppercase tracking-wider font-semibold">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-stone-100">
+                @forelse($reservasi as $item)
+                <tr class="hover:bg-stone-50 transition">
+                    <td class="px-5 py-4 text-stone-500 font-mono text-xs">#{{ $item->id_reservasi }}</td>
+                    <td class="px-5 py-4 font-semibold text-hotel-text">{{ $item->nama_lengkap }}</td>
+                    <td class="px-5 py-4 text-stone-600">{{ $item->tgl_checkin }}</td>
+                    <td class="px-5 py-4 text-stone-600">{{ $item->tgl_checkout }}</td>
+                    <td class="px-5 py-4">
+                        @if($item->status_reservasi == 'confirmed')
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Confirmed</span>
+                        @elseif($item->status_reservasi == 'pending')
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">Pending</span>
+                        @else
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">Cancelled</span>
+                        @endif
+                    </td>
+                    <td class="px-5 py-4 flex gap-2">
+                        <a href="{{ route('reservasi.show', $item->id_reservasi) }}"
+                           class="flex items-center gap-1 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium px-3 py-1.5 rounded-lg transition">
+                            <i data-lucide="eye" class="w-3 h-3"></i> Detail
+                        </a>
+                        <a href="{{ route('reservasi.edit', $item->id_reservasi) }}"
+                           class="flex items-center gap-1 bg-hotel-gold hover:bg-hotel-goldLight text-hotel-dark text-xs font-medium px-3 py-1.5 rounded-lg transition">
+                            <i data-lucide="pencil" class="w-3 h-3"></i> Edit
+                        </a>
+                        <form action="{{ route('reservasi.destroy', $item->id_reservasi) }}" method="POST" class="inline"
+                              onsubmit="return confirm('Hapus reservasi ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                    class="flex items-center gap-1 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-medium px-3 py-1.5 rounded-lg transition">
+                                <i data-lucide="trash-2" class="w-3 h-3"></i> Hapus
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" class="px-5 py-12 text-center text-stone-400">
+                        <i data-lucide="inbox" class="w-10 h-10 mx-auto mb-3 opacity-30"></i>
+                        <p>Tidak ada data reservasi</p>
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@endsection
