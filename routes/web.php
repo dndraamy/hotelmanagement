@@ -2,6 +2,7 @@
 
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\HRD\KehadiranController;
 use App\Http\Controllers\HRD\ApprovalCutiController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,6 @@ Route::get('/', function () {
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-Route::get('/jadwal', function () {
-    return view('jadwal.index');
-});
 
 Route::middleware(['auth'])->group(function () {
 
@@ -39,6 +37,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])
         ->name('inventory.laporan');
+
+    Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
+        Route::get('/', [KehadiranController::class, 'index'])->name('index');
+        Route::post('/checkin', [KehadiranController::class, 'checkIn'])->name('checkin');
+        Route::post('/checkout', [KehadiranController::class, 'checkOut'])->name('checkout');
+    });
 
     Route::prefix('hrd')->name('hrd.')->group(function () {
         Route::get('/cuti',                           [ApprovalCutiController::class, 'index'])->name('cuti.index');
