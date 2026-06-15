@@ -1,11 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-<<<<<<< HEAD
 use App\Http\Controllers\TransaksiKasController; 
-=======
 use App\Http\Controllers\InventoryController;
->>>>>>> development
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,9 +19,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'role:Staf Keuangan|Manajer Hotel'])->group(function () {
-    Route::get('/keuangan/transaksi', [TransaksiKasController::class, 'index'])->name('transaksi.index');
-    Route::post('/keuangan/transaksi', [TransaksiKasController::class, 'store'])->name('transaksi.store');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/kas/pemasukan', [TransaksiKasController::class, 'pemasukan'])->name('kas.pemasukan');
+    Route::get('/kas/pengeluaran', [TransaksiKasController::class, 'pengeluaran'])->name('kas.pengeluaran');
+    Route::post('/kas/store', [TransaksiKasController::class, 'store'])->name('kas.store');
 });
 
 require __DIR__.'/auth.php';
