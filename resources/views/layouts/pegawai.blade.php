@@ -109,27 +109,27 @@ tailwind.config = {
                     Modul Utama
                 </p>
 
-                <a href="{{ route('inventory.index') }}"
+                <a href="{{ route('pegawai.index') }}"
                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.index') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                    <span>Dashboard & Stok</span>
+                    <span>Dashboard dan Jadwal</span>
 
                 </a>
 
-                <a href="{{ route('inventory.mutasi') }}"
+                <a href="{{ route('pegawai.absensi') }}"
                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.mutasi') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
-                    <span>Mutasi Stok</span>
+                    <span>Absensi</span>
 
                 </a>
 
-                <a href="{{ route('inventory.laporan') }}"
+                <a href="{{ route('pegawai.form_pengajuan') }}"
                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.laporan') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="history" class="w-4 h-4"></i>
-                    <span>Riwayat Laporan</span>
+                    <span>Pengajuan Cuti dan Izin</span>
 
                 </a>
 
@@ -141,7 +141,7 @@ tailwind.config = {
         <div class="p-4 border-t border-stone-800 flex items-center gap-3 bg-black/30">
 
             <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-hotel-gold to-hotel-goldLight flex items-center justify-center text-hotel-dark font-bold">
-                SG
+                PH
             </div>
 
             <div>
@@ -170,7 +170,7 @@ tailwind.config = {
                 </h2>
 
                 <p class="text-[11px] text-stone-500">
-                    Sistem Informasi Manajemen Persediaan Gudang
+                    Sistem Informasi Manajemen Waktu dan Penggajian
                 </p>
             </div>
 
