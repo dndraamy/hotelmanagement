@@ -43,7 +43,11 @@ Route::middleware(['auth'])->group(function () {
 
 use App\Http\Controllers\Manajer\LaporanKeuanganController;
 
-Route::middleware(['auth', 'role:Manajer'])->prefix('manajer')->name('manajer.')->group(function () {
+Route::middleware(['auth', 'role:Manajer Hotel'])
+    ->prefix('manajer')
+    ->name('manajer.')
+    ->group(function () {
+
     Route::get('/laporan-keuangan', [LaporanKeuanganController::class, 'index'])
          ->name('laporan-keuangan.index');
 });
