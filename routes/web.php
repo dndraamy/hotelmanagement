@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+<<<<<<< HEAD
 use App\Http\Controllers\TransaksiKasController; 
+=======
+use App\Http\Controllers\InventoryController;
+>>>>>>> development
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,4 +27,23 @@ Route::middleware(['auth', 'role:Staf Keuangan|Manajer Hotel'])->group(function 
     Route::post('/keuangan/transaksi', [TransaksiKasController::class, 'store'])->name('transaksi.store');
 });
 
+require __DIR__.'/auth.php';
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/inventory', [InventoryController::class, 'index'])
+        ->name('inventory.index');
+
+    Route::get('/inventory/mutasi', [InventoryController::class, 'mutasi'])
+        ->name('inventory.mutasi');
+
+    Route::post('/inventory/masuk', [InventoryController::class, 'barangMasuk'])
+        ->name('inventory.masuk');
+
+    Route::post('/inventory/keluar', [InventoryController::class, 'barangKeluar'])
+        ->name('inventory.keluar');
+
+    Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])
+        ->name('inventory.laporan');
+
+});
 require __DIR__.'/auth.php';
