@@ -4,138 +4,37 @@ namespace App\Http\Controllers\HRD;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kehadiran;
-use App\Models\JadwalPegawai;
-use Carbon\Carbon;
+use App\Models\Pegawai;
+use Illuminate\Http\Request;
 
 class KehadiranController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $idPegawai = auth()->user()->id_pegawai;
+        $query = Kehadiran::with('pegawai');
 
-        $riwayat = Kehadiran::where('id_pegawai', $idPegawai)
+        if ($request->filled('id_pegawai')) {
+            $query->where('id_pegawai', $request->id_pegawai);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status_kehadiran', $request->status);
+        }
+
+        if ($request->filled('tanggal')) {
+            $query->whereDate('tanggal', $request->tanggal);
+        }
+
+        $kehadiran = $query
             ->latest('tanggal')
-            ->paginate(10);
+            ->paginate(15)
+            ->withQueryString();
 
-        $hariIni = Kehadiran::where('id_pegawai', $idPegawai)
-            ->whereDate('tanggal', now())
-            ->first();
+        $pegawais = Pegawai::orderBy('nama_lengkap')->get();
 
         return view('hrd.kehadiran.index', compact(
-            'riwayat',
-            'hariIni'
+            'kehadiran',
+            'pegawais'
         ));
-    }
-
-    public function checkIn()
-    {
-        $idPegawai = auth()->user()->id_pegawai;
-
-        $tanggal = now()->toDateString();
-
-        $existing = Kehadiran::where('id_pegawai', $idPegawai)
-            ->whereDate('tanggal', $tanggal)
-            ->first();
-
-        if ($existing) {
-            return back()->with(
-                'error',
-                'Anda sudah melakukan check-in hari ini.'
-            );
-        }
-
-        $status = 'Hadir';
-
-        $jadwal = JadwalPegawai::with('shift')
-            ->where('id_pegawai', $idPegawai)
-            ->whereDate('tanggal', $tanggal)
-            ->first();
-
-        if ($jadwal && $jadwal->shift) {
-
-            $jamShift = Carbon::parse(
-                $jadwal->shift->jam_mulai
-            );
-
-            $jamSekarang = now();
-
-            if ($jamSekarang->gt($jamShift)) {
-                $status = 'Terlambat';
-            }
-        }
-
-        Kehadiran::create([
-            'id_pegawai' => $idPegawai,
-            'tanggal' => $tanggal,
-            'jam_masuk' => now()->format('H:i:s'),
-            'status_kehadiran' => $status,
-            'menit_lembur' => 0,
-        ]);
-
-        return back()->with(
-            'success',
-            'Check-in berhasil.'
-        );
-    }
-
-    public function checkOut()
-    {
-        $idPegawai = auth()->user()->id_pegawai;
-
-        $kehadiran = Kehadiran::where(
-            'id_pegawai',
-            $idPegawai
-        )
-        ->whereDate('tanggal', now())
-        ->first();
-
-        if (!$kehadiran) {
-            return back()->with(
-                'error',
-                'Silakan check-in terlebih dahulu.'
-            );
-        }
-
-        if ($kehadiran->jam_pulang) {
-            return back()->with(
-                'error',
-                'Anda sudah check-out.'
-            );
-        }
-
-        $menitLembur = 0;
-
-        $jadwal = JadwalPegawai::with('shift')
-            ->where('id_pegawai', $idPegawai)
-            ->whereDate('tanggal', now())
-            ->first();
-
-        if ($jadwal && $jadwal->shift) {
-
-            $jamSelesaiShift = Carbon::parse(
-                $jadwal->shift->jam_selesai
-            );
-
-            $jamSekarang = now();
-
-            if ($jamSekarang->gt($jamSelesaiShift)) {
-
-                $menitLembur =
-                    $jamSelesaiShift
-                        ->diffInMinutes(
-                            $jamSekarang
-                        );
-            }
-        }
-
-        $kehadiran->update([
-            'jam_pulang' => now()->format('H:i:s'),
-            'menit_lembur' => $menitLembur,
-        ]);
-
-        return back()->with(
-            'success',
-            'Check-out berhasil.'
-        );
     }
 }

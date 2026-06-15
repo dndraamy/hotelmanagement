@@ -1,8 +1,8 @@
 <?php
 
-// use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\HRD\KehadiranController;
+use App\Http\Controllers\Pegawai\KehadiranController as PegawaiKehadiranController;
+use App\Http\Controllers\HRD\KehadiranController as HRDKehadiranController;
 use App\Http\Controllers\HRD\ApprovalCutiController;
 use App\Http\Controllers\Pegawai\PengajuanCutiController;
 use Illuminate\Support\Facades\Route;
@@ -10,17 +10,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
 
 Route::middleware(['auth'])->group(function () {
 
@@ -40,15 +29,16 @@ Route::middleware(['auth'])->group(function () {
         ->name('inventory.laporan');
 
     Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
-        Route::get('/', [KehadiranController::class, 'index'])->name('index');
-        Route::post('/checkin', [KehadiranController::class, 'checkIn'])->name('checkin');
-        Route::post('/checkout', [KehadiranController::class, 'checkOut'])->name('checkout');
+        Route::get('/', [PegawaiKehadiranController::class, 'index'])->name('index');
+        Route::post('/checkin', [PegawaiKehadiranController::class, 'checkIn'])->name('checkin');
+        Route::post('/checkout', [PegawaiKehadiranController::class, 'checkOut'])->name('checkout');
     });
 
     Route::get('/pegawai/form_pengajuan', [PengajuanCutiController::class, 'create'])->name('pegawai.cuti.create');
     Route::post('/pegawai/form_pengajuan', [PengajuanCutiController::class, 'store'])->name('pegawai.cuti.store');
 
     Route::prefix('hrd')->name('hrd.')->group(function () {
+        Route::get('/kehadiran', [HRDKehadiranController::class, 'index'])->name('kehadiran.index');
         Route::get('/cuti',                           [ApprovalCutiController::class, 'index'])->name('cuti.index');
         Route::get('/cuti/{pengajuanCuti}',           [ApprovalCutiController::class, 'show'])->name('cuti.show');
         Route::patch('/cuti/{pengajuanCuti}/approve', [ApprovalCutiController::class, 'approve'])->name('cuti.approve');
