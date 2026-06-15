@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReservasiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,3 +19,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/reservasi', [ReservasiController::class, 'index']); Route::get('/reservasi', [ReservasiController::class, 'index'])
+->middleware('auth')
+->name('reservasi.index'); Route::get('/reservasi/create', [ReservasiController::class, 'create'])
+->middleware('auth')
+->name('reservasi.create');
