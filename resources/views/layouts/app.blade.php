@@ -259,8 +259,6 @@
                 </div>
             @endif
 
-            {{ $slot }}
-
         </main>
 
     </div>

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>RBPL Hotel - Pegawai</title>
+    <title>RBPL Hotel - HRD</title>
 
     <link rel="icon" href="{{ asset('favicon.ico') }}">
 
@@ -109,7 +109,7 @@ tailwind.config = {
                     Modul Utama
                 </p>
 
-                <a href="{{ route('kehadiran.index') }}"
+                <a href="{{ route('hrd.kehadiran.index') }}"
                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.index') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
@@ -117,19 +117,19 @@ tailwind.config = {
 
                 </a>
 
-                <a href="{{ route('kehadiran.index') }}"
+                <a href="{{ route('hrd.kehadiran.index') }}"
                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.mutasi') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
-                    <span>Absensi</span>
+                    <span>Absensi Pegawai</span>
 
                 </a>
 
-                <a href="{{ route('pegawai.cuti.create') }}"
+                <a href="{{ route('hrd.cuti.index') }}"
                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.laporan') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="history" class="w-4 h-4"></i>
-                    <span>Pengajuan Cuti dan Izin</span>
+                    <span>Cuti dan Izin Pegawai</span>
 
                 </a>
 

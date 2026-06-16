@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('layouts.hrd')
+@section('content')
 
     {{-- Back --}}
     <div>
@@ -157,4 +158,4 @@
         </div>
     </div>
 
-</x-app-layout>
+@endsection

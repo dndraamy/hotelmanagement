@@ -2,7 +2,8 @@
     use Illuminate\Support\Str;
 @endphp
 
-<x-app-layout>
+@extends('layouts.hrd')
+@section('content')
 
     {{-- Header halaman --}}
     <div class="flex items-center justify-between">
@@ -88,4 +89,4 @@
         @endif
     </div>
 
-</x-app-layout>
+@endsection
