@@ -51,7 +51,7 @@
         </button>
     </div>
 
-    {{-- ─── TAB 1: CHECKIN (Confirmed → siap check-in) ─────────────────────── --}}
+    {{-- TAB 1: CHECK-IN --}}
     <div id="tab-checkin" class="tab-panel">
         <div class="px-6 py-3 bg-hotel-gold/5 border-b border-stone-100">
             <p class="text-xs text-stone-500">Reservasi berstatus <strong>Confirmed</strong> — klik <em>Proses Check-In</em> untuk memasukkan identitas tamu dan mengubah status kamar menjadi <strong>Terisi</strong>.</p>
@@ -109,10 +109,10 @@
         </div>
     </div>
 
-    {{-- ─── TAB 2: CHECKOUT (Checked-In → siap check-out) ──────────────────── --}}
+    {{-- TAB 2: CHECK-OUT --}}
     <div id="tab-checkout" class="tab-panel hidden">
         <div class="px-6 py-3 bg-emerald-50 border-b border-stone-100">
-            <p class="text-xs text-stone-500">Tamu berstatus <strong>Checked-In</strong> — klik <em>Proses Check-Out</em> untuk mengubah status kamar menjadi <strong>Kotor</strong> (antrian Housekeeping).</p>
+            <p class="text-xs text-stone-500">Tamu berstatus <strong>Checked-In</strong> — klik <em>Proses Check-Out</em> untuk melihat rincian tagihan dan memproses pembayaran.</p>
         </div>
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm">
@@ -147,13 +147,12 @@
                             <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Checked-In</span>
                         </td>
                         <td class="px-5 py-4">
-                            {{-- Trigger modal checkout --}}
-                            <button
-                                onclick="openCheckoutModal({{ $item->id_reservasi }}, '{{ addslashes($item->tamu->nama_lengkap) }}')"
-                                class="inline-flex items-center gap-1.5 bg-red-500 hover:bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
+                            {{-- Link ke halaman preview tagihan (PBI-36 & 37) --}}
+                            <a href="{{ route('checkin.checkout', $item->id_reservasi) }}"
+                               class="inline-flex items-center gap-1.5 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-bold px-4 py-2 rounded-xl transition">
                                 <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
                                 Proses Check-Out
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     @empty
@@ -170,46 +169,8 @@
     </div>
 </div>
 
-{{-- ─── MODAL KONFIRMASI CHECK-OUT ──────────────────────────────────────────── --}}
-<div id="modal-checkout" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-    {{-- Backdrop --}}
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
-
-    {{-- Card --}}
-    <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 z-10">
-        <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-5">
-                <i data-lucide="log-out" class="w-8 h-8 text-red-500"></i>
-            </div>
-            <h3 class="text-xl font-bold text-hotel-text mb-2">Konfirmasi Check-Out</h3>
-            <p class="text-sm text-stone-500 mb-1">Anda akan memproses check-out untuk:</p>
-            <p id="modal-tamu-name" class="text-base font-bold text-hotel-text mb-4">—</p>
-            <p class="text-xs text-stone-400 mb-6">
-                Status reservasi akan berubah menjadi <strong>Checked-Out</strong> dan
-                status kamar akan berubah menjadi <strong>Kotor</strong> (antrian Housekeeping).
-            </p>
-
-            <form id="form-checkout" method="POST" action="" class="w-full">
-                @csrf
-                <div class="flex gap-3">
-                    <button type="button"
-                        onclick="closeCheckoutModal()"
-                        class="flex-1 px-4 py-3 rounded-xl border border-stone-200 text-sm font-semibold text-stone-600 hover:bg-stone-50 transition">
-                        Batal
-                    </button>
-                    <button type="submit"
-                        class="flex-1 px-4 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-bold transition">
-                        Ya, Check-Out
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 @push('scripts')
 <script>
-    // Tab switching
     function switchTab(tab) {
         const panels = document.querySelectorAll('.tab-panel');
         const buttons = document.querySelectorAll('.tab-btn');
@@ -226,20 +187,6 @@
         activeBtn.classList.remove('border-transparent', 'text-stone-400');
     }
 
-    // Checkout modal
-    function openCheckoutModal(id, namaLengkap) {
-        document.getElementById('modal-tamu-name').textContent = namaLengkap;
-        document.getElementById('form-checkout').action = '/checkin/' + id + '/checkout';
-        document.getElementById('modal-checkout').classList.remove('hidden');
-        document.getElementById('modal-checkout').classList.add('flex');
-    }
-
-    function closeCheckoutModal() {
-        document.getElementById('modal-checkout').classList.add('hidden');
-        document.getElementById('modal-checkout').classList.remove('flex');
-    }
-
-    // Reinitialize Lucide icons after dynamic content
     lucide.createIcons();
 </script>
 @endpush

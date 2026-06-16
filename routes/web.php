@@ -38,11 +38,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/inventory/keluar', [InventoryController::class, 'barangKeluar'])->name('inventory.barangKeluar');
     Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])->name('inventory.laporan');
 
-    // ──── Resepsionis – Check-In & Check-Out (PB-06 / PBI-34 & PBI-35) ────
-    Route::get('/checkin',                      [CheckInController::class, 'index'])->name('checkin.index');
-    Route::get('/checkin/{id}',                 [CheckInController::class, 'show'])->name('checkin.show');
-    Route::post('/checkin/{id}/proses',         [CheckInController::class, 'proses'])->name('checkin.proses');
-    Route::post('/checkin/{id}/checkout',       [CheckInController::class, 'checkout'])->name('checkin.checkout');
+    // ──── Resepsionis – Check-In & Check-Out (PB-06 / PBI-34, 35, 36, 37) ────
+    Route::get('/checkin',                          [CheckInController::class, 'index'])->name('checkin.index');
+    Route::get('/checkin/{id}',                     [CheckInController::class, 'show'])->name('checkin.show');
+    Route::post('/checkin/{id}/proses',             [CheckInController::class, 'proses'])->name('checkin.proses');
+    Route::get('/checkin/{id}/checkout',            [CheckInController::class, 'showCheckout'])->name('checkin.checkout');
+    Route::post('/checkin/{id}/checkout/proses',    [CheckInController::class, 'prosesCheckout'])->name('checkin.prosesCheckout');
+    Route::get('/checkin/{id}/struk',               [CheckInController::class, 'struk'])->name('checkin.struk');
 
 });
 

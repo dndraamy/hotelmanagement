@@ -15,6 +15,10 @@ class Reservasi extends Model
         'tgl_checkin',
         'tgl_checkout',
         'status_reservasi',
+        'biaya_kamar',
+        'jam_terlambat',
+        'biaya_charge',
+        'total_tagihan',
     ];
 
     public function tamu()
