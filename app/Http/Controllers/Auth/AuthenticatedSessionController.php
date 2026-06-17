@@ -26,9 +26,23 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        // Regenerate session ID setelah login (mencegah session fixation attack)
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $roleName = $request->user()->roles->first()?->name;
+        $redirectRoute = match ($roleName) {
+            'Manajer Hotel' => 'dashboard.manager',
+            'Resepsionis' => 'dashboard.receptionist',
+            'Staf Keuangan' => 'dashboard.finance',
+            'Petugas Restoran' => 'dashboard.restaurant',
+            'Petugas Kebersihan' => 'dashboard.cleaning',
+            'Staf HRD' => 'dashboard.hrd',
+            'Karyawan' => 'dashboard.employee',
+            'Staf Gudang' => 'dashboard.warehouse',
+            'Super Admin' => 'dashboard.admin',
+            default => 'dashboard',
+        };
+        return redirect()->intended(route($redirectRoute, absolute: false));
     }
 
     /**
@@ -38,8 +52,10 @@ class AuthenticatedSessionController extends Controller
     {
         Auth::guard('web')->logout();
 
+        // Hapus semua data session
         $request->session()->invalidate();
 
+        // Buat CSRF token baru
         $request->session()->regenerateToken();
 
         return redirect('/');
