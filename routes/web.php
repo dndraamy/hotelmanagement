@@ -3,7 +3,14 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\CheckInController;
 use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,21 +21,41 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // ──── Profile ───────────────────────────────────────────────────────
+    Route::get('/profile',    [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile',  [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // ──── Reservasi (PB-05) ─────────────────────────────────────────────
+    // PBI-28: Pencarian Kamar
+    Route::get('/reservasi/cari-kamar', [ReservasiController::class, 'cariKamar'])->name('reservasi.cari-kamar');
+    Route::post('/reservasi/cari-kamar', [ReservasiController::class, 'prosesCariKamar'])->name('reservasi.proses-cari');
+
+    // PBI-29: Pembuatan Reservasi
+    Route::get('/reservasi/buat', [ReservasiController::class, 'buatReservasi'])->name('reservasi.buat');
+    Route::post('/reservasi/simpan', [ReservasiController::class, 'simpanReservasi'])->name('reservasi.simpan-reservasi');
+
+    // PBI-30: Pembayaran DP
+    Route::get('/reservasi/pembayaran-dp/{id}', [ReservasiController::class, 'formPembayaranDP'])->name('reservasi.pembayaran-dp');
+    Route::post('/reservasi/simpan-dp/{id}', [ReservasiController::class, 'simpanPembayaranDP'])->name('reservasi.simpan-dp');
+
+    // PBI-31: CRUD Daftar Reservasi
+    Route::resource('reservasi', ReservasiController::class);
+
+    // ──── Inventory ─────────────────────────────────────────────────────
+    Route::get('/inventory',         [InventoryController::class, 'index'])->name('inventory.index');
+    Route::get('/inventory/mutasi',  [InventoryController::class, 'mutasi'])->name('inventory.mutasi');
+    Route::post('/inventory/masuk',  [InventoryController::class, 'barangMasuk'])->name('inventory.masuk');
+    Route::post('/inventory/keluar', [InventoryController::class, 'barangKeluar'])->name('inventory.barangKeluar');
+    Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])->name('inventory.laporan');
+
+    // ──── Resepsionis – Check-In & Check-Out (PB-06 / PBI-34, 35, 36, 37) ──
+    Route::get('/checkin',                       [CheckInController::class, 'index'])->name('checkin.index');
+    Route::get('/checkin/{id}',                  [CheckInController::class, 'show'])->name('checkin.show');
+    Route::post('/checkin/{id}/proses',          [CheckInController::class, 'proses'])->name('checkin.proses');
+    Route::get('/checkin/{id}/checkout',         [CheckInController::class, 'showCheckout'])->name('checkin.checkout');
+    Route::post('/checkin/{id}/checkout/proses', [CheckInController::class, 'prosesCheckout'])->name('checkin.prosesCheckout');
+    Route::get('/checkin/{id}/struk',            [CheckInController::class, 'struk'])->name('checkin.struk');
 });
 
-// Route Reservasi (PBI-28 : Pencarian Kamar)
-Route::get('/reservasi/cari-kamar', [ReservasiController::class, 'cariKamar'])->name('reservasi.cari-kamar');
-Route::post('/reservasi/cari-kamar', [ReservasiController::class, 'prosesCariKamar'])->name('reservasi.proses-cari');
-
-// Route Reservasi (PBI-29 : Pembuatan Reservasi)
-Route::get('/reservasi/buat', [ReservasiController::class, 'buatReservasi'])->name('reservasi.buat');
-Route::post('/reservasi/simpan', [ReservasiController::class, 'simpanReservasi'])->name('reservasi.simpan-reservasi');
-
-// Route Reservasi (PBI-30 : Pembayaran DP)
-Route::get('/reservasi/pembayaran-dp/{id}', [ReservasiController::class, 'formPembayaranDP'])->name('reservasi.pembayaran-dp');
-Route::post('/reservasi/simpan-dp/{id}', [ReservasiController::class, 'simpanPembayaranDP'])->name('reservasi.simpan-dp');
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
