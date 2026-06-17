@@ -29,7 +29,20 @@ class AuthenticatedSessionController extends Controller
         // Regenerate session ID setelah login (mencegah session fixation attack)
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $roleName = $request->user()->roles->first()?->name;
+        $redirectRoute = match ($roleName) {
+            'Manajer Hotel' => 'dashboard.manager',
+            'Resepsionis' => 'dashboard.receptionist',
+            'Staf Keuangan' => 'dashboard.finance',
+            'Petugas Restoran' => 'dashboard.restaurant',
+            'Petugas Kebersihan' => 'dashboard.cleaning',
+            'Staf HRD' => 'dashboard.hrd',
+            'Karyawan' => 'dashboard.employee',
+            'Staf Gudang' => 'dashboard.warehouse',
+            'Super Admin' => 'dashboard.admin',
+            default => 'dashboard',
+        };
+        return redirect()->intended(route($redirectRoute, absolute: false));
     }
 
     /**
