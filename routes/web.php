@@ -27,20 +27,25 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // ──── Reservasi (PB-05) ─────────────────────────────────────────────
+    // PBI-31: Daftar & Detail
+    Route::get('/reservasi', [ReservasiController::class, 'index'])->name('reservasi.index');
+    Route::get('/reservasi/{id}', [ReservasiController::class, 'show'])->name('reservasi.show');
+    Route::delete('/reservasi/{id}', [ReservasiController::class, 'destroy'])->name('reservasi.destroy');
+
+    // PBI-31: Edit & Update Reservasi
+    Route::get('/reservasi/{id}/edit', [ReservasiController::class, 'edit'])->name('reservasi.edit');
+    Route::put('/reservasi/{id}', [ReservasiController::class, 'update'])->name('reservasi.update');
+
     // PBI-28: Pencarian Kamar
-    Route::get('/reservasi/cari-kamar', [ReservasiController::class, 'cariKamar'])->name('reservasi.cari-kamar');
-    Route::post('/reservasi/cari-kamar', [ReservasiController::class, 'prosesCariKamar'])->name('reservasi.proses-cari');
+    Route::get('/reservasi/cari/kamar', [ReservasiController::class, 'cariKamar'])->name('reservasi.cari-kamar');
 
     // PBI-29: Pembuatan Reservasi
-    Route::get('/reservasi/buat', [ReservasiController::class, 'buatReservasi'])->name('reservasi.buat');
+    Route::get('/reservasi/buat/baru', [ReservasiController::class, 'buatReservasi'])->name('reservasi.buat');
     Route::post('/reservasi/simpan', [ReservasiController::class, 'simpanReservasi'])->name('reservasi.simpan-reservasi');
 
     // PBI-30: Pembayaran DP
-    Route::get('/reservasi/pembayaran-dp/{id}', [ReservasiController::class, 'formPembayaranDP'])->name('reservasi.pembayaran-dp');
-    Route::post('/reservasi/simpan-dp/{id}', [ReservasiController::class, 'simpanPembayaranDP'])->name('reservasi.simpan-dp');
-
-    // PBI-31: CRUD Daftar Reservasi
-    Route::resource('reservasi', ReservasiController::class);
+    Route::get('/reservasi/{id}/pembayaran-dp', [ReservasiController::class, 'formPembayaranDP'])->name('reservasi.pembayaran-dp');
+    Route::post('/reservasi/{id}/simpan-dp', [ReservasiController::class, 'simpanPembayaranDP'])->name('reservasi.simpan-dp');
 
     // ──── Inventory ─────────────────────────────────────────────────────
     Route::get('/inventory',         [InventoryController::class, 'index'])->name('inventory.index');
@@ -49,7 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/inventory/keluar', [InventoryController::class, 'barangKeluar'])->name('inventory.barangKeluar');
     Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])->name('inventory.laporan');
 
-    // ──── Resepsionis – Check-In & Check-Out (PB-06 / PBI-34, 35, 36, 37) ──
+    // ──── Resepsionis – Check-In & Check-Out ──────────────────────────
     Route::get('/checkin',                       [CheckInController::class, 'index'])->name('checkin.index');
     Route::get('/checkin/{id}',                  [CheckInController::class, 'show'])->name('checkin.show');
     Route::post('/checkin/{id}/proses',          [CheckInController::class, 'proses'])->name('checkin.proses');

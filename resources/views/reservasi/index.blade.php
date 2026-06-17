@@ -40,18 +40,20 @@
     </div>
 </div>
 
+{{-- TOMBOL TAMBAH RESERVASI --}}
+<div class="flex justify-end mt-4 mb-4">
+    <a href="{{ route('reservasi.cari-kamar') }}"
+       class="inline-flex items-center gap-2 bg-hotel-gold hover:bg-hotel-goldLight text-hotel-dark text-sm font-bold px-5 py-2.5 rounded-xl transition">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        Tambah Reservasi
+    </a>
+</div>
+
 {{-- TABLE --}}
 <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden">
-    <div class="px-6 py-4 border-b border-stone-100 flex justify-between items-center">
-        <div>
-            <h3 class="font-bold text-hotel-text">Daftar Reservasi Terbaru</h3>
-            <p class="text-xs text-stone-400 mt-0.5">Semua data reservasi tamu</p>
-        </div>
-        <a href="{{ route('reservasi.create') }}"
-           class="flex items-center gap-2 bg-hotel-gold hover:bg-hotel-goldLight text-hotel-dark text-xs font-bold px-4 py-2 rounded-xl transition">
-            <i data-lucide="plus" class="w-4 h-4"></i>
-            Tambah Reservasi
-        </a>
+    <div class="px-6 py-4 border-b border-stone-100">
+        <h3 class="font-bold text-hotel-text">Daftar Reservasi Terbaru</h3>
+        <p class="text-xs text-stone-400 mt-0.5">Semua data reservasi tamu</p>
     </div>
 
     <div class="overflow-x-auto">
@@ -93,8 +95,14 @@
                            class="flex items-center gap-1 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium px-3 py-1.5 rounded-lg transition">
                             <i data-lucide="eye" class="w-3 h-3"></i> Detail
                         </a>
-                        <a href="{{ route('reservasi.edit', $item->id_reservasi) }}"
+                        @if($item->status_reservasi == 'Menunggu DP')
+                        <a href="{{ route('reservasi.pembayaran-dp', $item->id_reservasi) }}"
                            class="flex items-center gap-1 bg-hotel-gold hover:bg-hotel-goldLight text-hotel-dark text-xs font-medium px-3 py-1.5 rounded-lg transition">
+                            <i data-lucide="credit-card" class="w-3 h-3"></i> Bayar DP
+                        </a>
+                        @endif
+                        <a href="{{ route('reservasi.edit', $item->id_reservasi) }}"
+                           class="flex items-center gap-1 bg-blue-100 hover:bg-blue-200 text-blue-700 text-xs font-medium px-3 py-1.5 rounded-lg transition">
                             <i data-lucide="pencil" class="w-3 h-3"></i> Edit
                         </a>
                         <form action="{{ route('reservasi.destroy', $item->id_reservasi) }}" method="POST" class="inline"
@@ -113,6 +121,10 @@
                     <td colspan="6" class="px-5 py-12 text-center text-stone-400">
                         <i data-lucide="inbox" class="w-10 h-10 mx-auto mb-3 opacity-30"></i>
                         <p>Tidak ada data reservasi</p>
+                        <a href="{{ route('reservasi.cari-kamar') }}" 
+                           class="inline-block mt-3 px-4 py-2 bg-hotel-gold hover:bg-hotel-goldLight text-hotel-dark text-sm font-bold rounded-xl transition">
+                            + Buat Reservasi Pertama
+                        </a>
                     </td>
                 </tr>
                 @endforelse

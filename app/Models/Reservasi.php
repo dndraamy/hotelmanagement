@@ -16,7 +16,7 @@ class Reservasi extends Model
         'tgl_checkout',
         'status_reservasi',
         'biaya_kamar',
-        'jam_terlambat',
+        'Langkah 5: Update Model Reservasi (Tambahkan Relasi)jam_terlambat',
         'biaya_charge',
         'total_tagihan',
     ];
