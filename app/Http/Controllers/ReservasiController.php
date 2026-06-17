@@ -25,7 +25,7 @@ class ReservasiController extends Controller
         $request->validate([
             'tanggal_checkin' => 'required|date|after_or_equal:today',
             'tanggal_checkout' => 'required|date|after:tanggal_checkin',
-            'tipe_kamar_id' => 'required|exists:tipe_kamar,id',
+            'tipe_kamar_id' => 'required|exists:tipe_kamar,id_tipe',
         ]);
 
         $kamarTersedia = Kamar::where('tipe_kamar_id', $request->tipe_kamar_id)
@@ -35,7 +35,7 @@ class ReservasiController extends Controller
         return view('reservasi.hasil-kamar', compact('kamarTersedia', 'request'));
     }
 
-    // PBI-29: Form buat reservasi (tampilkan form data tamu)
+    // PBI-29: Form buat reservasi
     public function buatReservasi(Request $request)
     {
         $kamar = Kamar::findOrFail($request->kamar_id);
@@ -43,11 +43,11 @@ class ReservasiController extends Controller
         return view('reservasi.buat-reservasi', compact('kamar', 'request'));
     }
 
-    // PBI-29: Simpan reservasi ke database
+    // PBI-29: Simpan reservasi
     public function simpanReservasi(Request $request)
     {
         $request->validate([
-            'kamar_id' => 'required|exists:kamar,id',
+            'kamar_id' => 'required|exists:kamar,id_kamar',
             'tanggal_checkin' => 'required|date',
             'tanggal_checkout' => 'required|date|after:tanggal_checkin',
             'nama_tamu' => 'required|string|max:255',
@@ -56,7 +56,6 @@ class ReservasiController extends Controller
             'email' => 'required|email|max:100',
         ]);
 
-        // Simpan data tamu
         $tamu = Tamu::create([
             'nama' => $request->nama_tamu,
             'no_ktp' => $request->no_ktp,
@@ -64,22 +63,19 @@ class ReservasiController extends Controller
             'email' => $request->email,
         ]);
 
-        // Simpan reservasi
         $reservasi = Reservasi::create([
-            'id_tamu' => $tamu->id,
+            'id_tamu' => $tamu->id_tamu,
             'tanggal_checkin' => $request->tanggal_checkin,
             'tanggal_checkout' => $request->tanggal_checkout,
-            'status' => 'reserved',
+            'status_reservasi' => 'reserved',
         ]);
 
-        // Simpan detail kamar
         DetailKamar::create([
-            'id_reservasi' => $reservasi->id,
+            'id_reservasi' => $reservasi->id_reservasi,
             'id_kamar' => $request->kamar_id,
         ]);
 
-        // Redirect ke halaman pembayaran DP (PBI-30)
-        return redirect()->route('reservasi.pembayaran-dp', $reservasi->id)
+        return redirect()->route('reservasi.pembayaran-dp', $reservasi->id_reservasi)
             ->with('success', 'Reservasi berhasil dibuat! Silakan bayar DP.');
     }
 
@@ -88,9 +84,8 @@ class ReservasiController extends Controller
     {
         $reservasi = Reservasi::with(['tamu', 'detailKamar.kamar.tipeKamar'])->findOrFail($id_reservasi);
         
-        // Hitung total harga (asumsi: harga kamar per malam * jumlah malam)
         $jumlahMalam = date_diff(date_create($reservasi->tanggal_checkin), date_create($reservasi->tanggal_checkout))->days;
-        $totalHarga = $reservasi->detailKamar->first()->kamar->tipeKamar->harga * $jumlahMalam;
+        $totalHarga = $reservasi->detailKamar->first()->kamar->tipeKamar->harga_per_malam * $jumlahMalam;
         
         return view('reservasi.pembayaran-dp', compact('reservasi', 'totalHarga'));
     }
@@ -104,12 +99,11 @@ class ReservasiController extends Controller
 
         $reservasi = Reservasi::findOrFail($id_reservasi);
         
-        // Simpan pembayaran DP
         Pembayaran::create([
-            'id_reservasi' => $reservasi->id,
+            'id_reservasi' => $reservasi->id_reservasi,
             'jumlah' => $request->jumlah_dp,
-            'tipe' => 'dp',
-            'status' => 'lunas',
+            'tipe_pembayaran' => 'dp',
+            'status_pembayaran' => 'lunas',
             'tanggal_pembayaran' => now(),
         ]);
 
