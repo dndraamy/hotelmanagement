@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PosRestoranController;
+use App\Http\Controllers\RoomChargeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,6 +31,12 @@ Route::middleware('auth')->group(function () {
 
         // Charge to Room: update status_pembayaran dan id_reservasi
         Route::patch('/{id_pesanan}/charge-to-room', [PosRestoranController::class, 'chargeToRoom'])->name('charge-to-room');
+    });
+
+    // ─── Room Charge Terminal ────────────────────────────────────────────────
+    Route::prefix('room-charge')->name('room-charge.')->group(function () {
+        Route::get('/', [RoomChargeController::class, 'index'])->name('index');
+        Route::post('/store', [RoomChargeController::class, 'store'])->name('store');
     });
 });
 
