@@ -32,7 +32,7 @@ class KehadiranController extends Controller
 
         $pegawais = Pegawai::orderBy('nama_lengkap')->get();
 
-        return view('hrd.kehadiran.index', compact(
+        return view('dashboard.hrd.kehadiran.index', compact(
             'kehadiran',
             'pegawais'
         ));

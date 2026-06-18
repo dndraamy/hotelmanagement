@@ -5,6 +5,7 @@ namespace App\Http\Controllers\HRD;
 use App\Http\Controllers\Controller;
 use App\Models\PengajuanCuti;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApprovalCutiController extends Controller
 {
@@ -25,7 +26,7 @@ class ApprovalCutiController extends Controller
             'Rejected' => PengajuanCuti::where('status_approval', 'Rejected')->count(),
         ];
 
-        return view('hrd.cuti.index', compact('pengajuan', 'status', 'counts'));
+        return view('dashboard.hrd.cuti.index', compact('pengajuan', 'status', 'counts'));
     }
 
     // Detail satu pengajuan
@@ -33,7 +34,7 @@ class ApprovalCutiController extends Controller
     {
         $pengajuanCuti->load(['pegawai', 'approver']);
 
-        return view('hrd.cuti.show', compact('pengajuanCuti'));
+        return view('dashboard.hrd.cuti.show', compact('pengajuanCuti'));
     }
 
     // Setujui pengajuan
@@ -45,11 +46,11 @@ class ApprovalCutiController extends Controller
 
         $pengajuanCuti->update([
             'status_approval' => 'Approved',
-            'id_approver'     => auth()->user()->id_pegawai,
+            'id_approver'     => Auth::id()
         ]);
 
         return redirect()
-            ->route('hrd.cuti.index', ['status' => 'Pending'])
+            ->route('dashboard.hrd.cuti.index', ['status' => 'Pending'])
             ->with('success', "Pengajuan cuti {$pengajuanCuti->pegawai->nama_lengkap} disetujui.");
     }
 
@@ -62,11 +63,11 @@ class ApprovalCutiController extends Controller
 
         $pengajuanCuti->update([
             'status_approval' => 'Rejected',
-            'id_approver'     => auth()->user()->id_pegawai,
+            'id_approver'     => Auth::id()
         ]);
 
         return redirect()
-            ->route('hrd.cuti.index', ['status' => 'Pending'])
+            ->route('dashboard.hrd.cuti.index', ['status' => 'Pending'])
             ->with('success', "Pengajuan cuti {$pengajuanCuti->pegawai->nama_lengkap} ditolak.");
     }
 }

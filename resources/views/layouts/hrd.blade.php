@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Facades\Auth;
+@endphp
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -55,7 +59,6 @@
                 }
             }
         }
-        }
     </script>
 
     <style>
@@ -105,7 +108,7 @@
                         Modul Utama
                     </p>
 
-                    <a href="{{ route('hrd.kehadiran.index') }}"
+                    <a href="{{ route('dashboard.hrd') }}"
                         class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.index') ? 'sidebar-active' : '' }}">
 
                         <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
@@ -113,7 +116,7 @@
 
                     </a>
 
-                    <a href="{{ route('hrd.kehadiran.index') }}"
+                    <a href="{{ route('dashboard.hrd.kehadiran.index') }}"
                         class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.mutasi') ? 'sidebar-active' : '' }}">
 
                         <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
@@ -121,7 +124,7 @@
 
                     </a>
 
-                    <a href="{{ route('hrd.cuti.index') }}"
+                    <a href="{{ route('dashboard.hrd.cuti.index') }}"
                         class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.laporan') ? 'sidebar-active' : '' }}">
 
                         <i data-lucide="history" class="w-4 h-4"></i>
@@ -129,13 +132,24 @@
 
                     </a>
 
-                    <a href="{{ route('hrd.penggajian.index') }}"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('hrd.penggajian') ? 'sidebar-active' : '' }}">
+                    <a href="{{ route('dashboard.hrd.penggajian.index') }}"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('dashboard.hrd.penggajian') ? 'sidebar-active' : '' }}">
 
                         <i data-lucide="banknote" class="w-4 h-4"></i>
                         <span>Penggajian</span>
 
                     </a>
+
+                    <form method="POST" action="{{ route('logout') }}" class="w-full mt-2 border-t border-stone-800 pt-2">
+                        @csrf
+                        <button type="submit"
+                            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white">
+
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            <span>Keluar</span>
+
+                        </button>
+                    </form>
                 </nav>
 
             </div>
@@ -145,16 +159,16 @@
 
                 <div
                     class="w-10 h-10 rounded-full bg-gradient-to-tr from-hotel-gold to-hotel-goldLight flex items-center justify-center text-hotel-dark font-bold">
-                    HRD
+                    {{ strtoupper(substr(Auth::user()->username, 0, 2)) }}
                 </div>
 
                 <div>
                     <h4 class="text-sm font-semibold text-white">
-                        Staff HRD
+                        {{ Auth::user()->username }}
                     </h4>
 
                     <p class="text-xs text-stone-500">
-                        Hotel Management
+                        {{ Auth::user()->role ?? 'HRD' }}
                     </p>
                 </div>
 
@@ -190,7 +204,7 @@
                             <i data-lucide="bell" class="w-5 h-5 text-stone-700"></i>
 
                             @if (isset($totalWarning) && $totalWarning > 0)
-                                <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+                            <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
                             @endif
 
                         </button>
@@ -213,37 +227,37 @@
                             <div class="max-h-80 overflow-y-auto">
 
                                 @forelse($stokMenipisList ?? [] as $item)
-                                    <div class="p-4 border-b hover:bg-stone-50">
+                                <div class="p-4 border-b hover:bg-stone-50">
 
-                                        <div class="flex justify-between">
+                                    <div class="flex justify-between">
 
-                                            <div>
+                                        <div>
 
-                                                <h4 class="font-semibold text-sm">
-                                                    {{ $item->nama_barang }}
-                                                </h4>
+                                            <h4 class="font-semibold text-sm">
+                                                {{ $item->nama_barang }}
+                                            </h4>
 
-                                                <p class="text-xs text-red-600 mt-1">
-                                                    Stok tersisa:
-                                                    {{ $item->stok_sekarang }}
-                                                    {{ $item->satuan }}
-                                                </p>
-
-                                            </div>
-
-                                            <span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">
-                                                Min {{ $item->stok_minimal }}
-                                            </span>
+                                            <p class="text-xs text-red-600 mt-1">
+                                                Stok tersisa:
+                                                {{ $item->stok_sekarang }}
+                                                {{ $item->satuan }}
+                                            </p>
 
                                         </div>
 
+                                        <span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">
+                                            Min {{ $item->stok_minimal }}
+                                        </span>
+
                                     </div>
+
+                                </div>
 
                                 @empty
 
-                                    <div class="p-6 text-center text-emerald-600 text-sm">
-                                        Semua stok aman
-                                    </div>
+                                <div class="p-6 text-center text-emerald-600 text-sm">
+                                    Semua stok aman
+                                </div>
                                 @endforelse
 
                             </div>
@@ -270,15 +284,15 @@
             <main class="p-6 max-w-7xl w-full mx-auto space-y-6 flex-1">
 
                 @if (session('success'))
-                    <div class="bg-emerald-50 border border-emerald-300 text-emerald-800 p-4 rounded-xl text-sm">
-                        {{ session('success') }}
-                    </div>
+                <div class="bg-emerald-50 border border-emerald-300 text-emerald-800 p-4 rounded-xl text-sm">
+                    {{ session('success') }}
+                </div>
                 @endif
 
                 @if (session('error'))
-                    <div class="bg-red-50 border border-red-300 text-red-800 p-4 rounded-xl text-sm">
-                        {{ session('error') }}
-                    </div>
+                <div class="bg-red-50 border border-red-300 text-red-800 p-4 rounded-xl text-sm">
+                    {{ session('error') }}
+                </div>
                 @endif
 
                 @yield('content')

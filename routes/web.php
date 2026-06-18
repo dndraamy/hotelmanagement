@@ -12,8 +12,43 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    // Role-based Dashboards
+    Route::get('/dashboard/manager', function () {
+        return view('dashboard');
+    })->middleware('role:Manajer Hotel')->name('dashboard.manager');
+    Route::get('/dashboard/receptionist', function () {
+        return view('dashboard');
+    })->middleware('role:Resepsionis')->name('dashboard.receptionist');
+    Route::get('/dashboard/finance', function () {
+        return view('dashboard');
+    })->middleware('role:Staf Keuangan')->name('dashboard.finance');
+    Route::get('/dashboard/restaurant', function () {
+        return view('dashboard');
+    })->middleware('role:Petugas Restoran')->name('dashboard.restaurant');
+    Route::get('/dashboard/cleaning', function () {
+        return view('dashboard');
+    })->middleware('role:Petugas Kebersihan')->name('dashboard.cleaning');
+    // Route::get('/dashboard/hrd', function () {
+    //     return view('dashboard');
+    // })->middleware('role:Staf HRD')->name('dashboard.hrd');
+    Route::get('/dashboard/employee', function () {
+        return view('dashboard');
+    })->middleware('role:Karyawan')->name('dashboard.employee');
+    Route::get('/dashboard/warehouse', function () {
+        return view('dashboard');
+    })->middleware('role:Staf Gudang')->name('dashboard.warehouse');
+    Route::get('/dashboard/admin', function () {
+        return view('dashboard');
+    })->middleware('role:Super Admin')->name('dashboard.admin');
+
+    Route::get('/dashboard/hrd', function () {
+        return view('dashboard.hrd.index'); 
+    })->middleware('role:Staf HRD')->name('dashboard.hrd');
+});
 
 Route::middleware(['auth'])->group(function () {
 
@@ -41,7 +76,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pegawai/form_pengajuan', [PengajuanCutiController::class, 'create'])->name('pegawai.cuti.create');
     Route::post('/pegawai/form_pengajuan', [PengajuanCutiController::class, 'store'])->name('pegawai.cuti.store');
 
-    Route::prefix('hrd')->name('hrd.')->group(function () {
+    Route::prefix('dashboard/hrd')->name('dashboard.hrd.')->group(function () {
         Route::get('/kehadiran', [HRDKehadiranController::class, 'index'])->name('kehadiran.index');
         Route::get('/cuti',                           [ApprovalCutiController::class, 'index'])->name('cuti.index');
         Route::get('/cuti/{pengajuanCuti}',           [ApprovalCutiController::class, 'show'])->name('cuti.show');
@@ -54,4 +89,3 @@ Route::middleware(['auth'])->group(function () {
 
 });
 require __DIR__.'/auth.php';
- 

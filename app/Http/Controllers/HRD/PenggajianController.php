@@ -24,7 +24,7 @@ class PenggajianController extends Controller
             ->where('periode_tahun', $tahun)
             ->get();
 
-        return view('hrd.penggajian.index', compact(
+        return view('dashboard.hrd.penggajian.index', compact(
             'riwayatGaji',
             'bulan',
             'tahun'
@@ -193,7 +193,7 @@ class PenggajianController extends Controller
         }
     }
 
-    public function cetakSlip($id)
+    public function cetakSlip(int $id)
     {
         $penggajian = Penggajian::with([
             'pegawai.jabatan',
@@ -207,7 +207,7 @@ class PenggajianController extends Controller
         }
 
         return view(
-            'hrd.penggajian.slip',
+            'dashboard.hrd.penggajian.slip',
             compact('penggajian')
         );
     }
