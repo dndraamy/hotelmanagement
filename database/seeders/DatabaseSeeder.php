@@ -61,5 +61,8 @@ class DatabaseSeeder extends Seeder
             ]
         );
         $admin->assignRole('Super Admin');
+        
+        // Seed data menu makanan & minuman untuk modul POS Restoran (PBI-44)
+        $this->call(ItemMenuSeeder::class);
     }
 }
