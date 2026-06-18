@@ -1,16 +1,6 @@
-<x-app-layout>
+@extends('layouts.housekeeping')
 
-  <x-slot name="header">
-    <div>
-        <h2 class="text-4xl font-bold text-white">
-            Housekeeping Management
-        </h2>
-
-        <p class="text-gray-300 mt-2">
-            Monitor dan perbarui status kebersihan kamar hotel
-        </p>
-    </div>
-</x-slot>
+@section('content')
 
     <div class="min-h-screen bg-[#FAF9F6] py-8">
 
@@ -205,4 +195,4 @@
 
     </div>
 
-</x-app-layout>
+@endsection
