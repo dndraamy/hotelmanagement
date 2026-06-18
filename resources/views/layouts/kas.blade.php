@@ -115,6 +115,12 @@ tailwind.config = {
       <i data-lucide="trending-down" class="w-4 h-4"></i> <span>Input Pengeluaran</span>
         </a>
 
+        <a href="{{ route('penggabungan-tagihan.index') }}" class="...">
+         <i data-lucide="trending-up" class="w-4 h-4"></i> <span>Penggabungan Tagihan</span>
+        </a>
+
+
+
         </div>
 
         <!-- USER -->

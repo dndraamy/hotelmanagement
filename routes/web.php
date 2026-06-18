@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TransaksiKasController; 
+use App\Http\Controllers\TransaksiKasController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\PenggabunganTagihanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,7 +26,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/kas/store', [TransaksiKasController::class, 'store'])->name('kas.store');
 });
 
-require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/inventory', [InventoryController::class, 'index'])
@@ -42,6 +42,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])
         ->name('inventory.laporan');
+    
+  // ─── Penggabungan Tagihan ────────────────────────────────────────────────
+  Route::get('/kas/penggabungan-tagihan', [PenggabunganTagihanController::class, 'index'])
+    ->name('penggabungan-tagihan.index');
 
+Route::post('/kas/penggabungan-tagihan/merge', [PenggabunganTagihanController::class, 'merge'])
+    ->name('penggabungan-tagihan.merge');
+
+Route::post('/kas/penggabungan-tagihan/unmerge', [PenggabunganTagihanController::class, 'unmerge'])
+    ->name('penggabungan-tagihan.unmerge');
 });
 require __DIR__.'/auth.php';
