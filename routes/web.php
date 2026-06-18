@@ -5,6 +5,7 @@ use App\Http\Controllers\Pegawai\KehadiranController as PegawaiKehadiranControll
 use App\Http\Controllers\HRD\KehadiranController as HRDKehadiranController;
 use App\Http\Controllers\HRD\ApprovalCutiController;
 use App\Http\Controllers\Pegawai\PengajuanCutiController;
+use App\Http\Controllers\HRD\PenggajianController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -46,6 +47,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/cuti/{pengajuanCuti}',           [ApprovalCutiController::class, 'show'])->name('cuti.show');
         Route::patch('/cuti/{pengajuanCuti}/approve', [ApprovalCutiController::class, 'approve'])->name('cuti.approve');
         Route::patch('/cuti/{pengajuanCuti}/reject',  [ApprovalCutiController::class, 'reject'])->name('cuti.reject');
+        Route::get('/penggajian', [PenggajianController::class, 'index'])->name('penggajian.index');
+        Route::post('/penggajian/generate', [PenggajianController::class, 'generate'])->name('penggajian.generate');
+        Route::get('/penggajian/{id}/cetak', [PenggajianController::class, 'cetakSlip'])->name('penggajian.cetak');
     });
 
 });
