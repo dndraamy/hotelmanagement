@@ -8,7 +8,23 @@ class Pembayaran extends Model
 {
     protected $table = 'pembayaran';
     protected $primaryKey = 'id_pembayaran';
-    protected $fillable = ['id_tagihan', 'id_reservasi', 'jenis_pembayaran', 'metode_bayar', 'nominal', 'tanggal_bayar'];
+
+    protected $fillable = [
+        'id_tagihan',
+        'id_reservasi',
+        'jenis_pembayaran',
+        'metode_bayar',
+        'nominal',
+        'tanggal_bayar',
+        'nomor_referensi',
+        'bukti_pembayaran',
+        'status',
+    ];
+
+    protected $casts = [
+        'tanggal_bayar' => 'date',
+        'nominal' => 'decimal:2',
+    ];
 
     public function tagihan()
     {
