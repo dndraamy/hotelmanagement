@@ -19,20 +19,20 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-public function boot(): void
-{
-    View::composer('layouts.inventory', function ($view) {
+    public function boot(): void
+    {
+        View::composer(['layouts.inventory', 'layouts.app'], function ($view) {
 
-        $stokMenipisList = Barang::whereColumn(
-            'stok_sekarang',
-            '<=',
-            'stok_minimal'
-        )->get();
+            $stokMenipisList = Barang::whereColumn(
+                'stok_sekarang',
+                '<=',
+                'stok_minimal'
+            )->get();
 
-        $view->with([
-            'stokMenipisList' => $stokMenipisList,
-            'totalWarning' => $stokMenipisList->count(),
-        ]);
-    });
-}
+            $view->with([
+                'stokMenipisList' => $stokMenipisList,
+                'totalWarning' => $stokMenipisList->count(),
+            ]);
+        });
+    }
 }
