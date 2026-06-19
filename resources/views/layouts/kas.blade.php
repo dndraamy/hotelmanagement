@@ -103,37 +103,23 @@ tailwind.config = {
             </div>
 
             <!-- MENU -->
-            <nav class="mt-6 px-4 space-y-2">
+         <p class="text-[10px] uppercase tracking-widest text-stone-500 px-3 mb-3 font-semibold mt-6">
+         Modul Keuangan
+        </p>
 
-                <p class="text-[10px] uppercase tracking-widest text-stone-500 px-3 mb-3 font-semibold">
-                    Modul Utama
-                </p>
+        <a href="{{ route('kas.pemasukan') }}" class="...">
+         <i data-lucide="trending-up" class="w-4 h-4"></i> <span>Input Pemasukan</span>
+        </a>
 
-                <a href="{{ route('inventory.index') }}"
-                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.index') ? 'sidebar-active' : '' }}">
+        <a href="{{ route('kas.pengeluaran') }}" class="...">
+      <i data-lucide="trending-down" class="w-4 h-4"></i> <span>Input Pengeluaran</span>
+        </a>
 
-                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                    <span>Dashboard & Stok</span>
+        <a href="{{ route('penggabungan-tagihan.index') }}" class="...">
+         <i data-lucide="trending-up" class="w-4 h-4"></i> <span>Penggabungan Tagihan</span>
+        </a>
 
-                </a>
 
-                <a href="{{ route('inventory.mutasi') }}"
-                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.mutasi') ? 'sidebar-active' : '' }}">
-
-                    <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
-                    <span>Mutasi Stok</span>
-
-                </a>
-
-                <a href="{{ route('inventory.laporan') }}"
-                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.laporan') ? 'sidebar-active' : '' }}">
-
-                    <i data-lucide="history" class="w-4 h-4"></i>
-                    <span>Riwayat Laporan</span>
-
-                </a>
-
-            </nav>
 
         </div>
 
@@ -141,16 +127,16 @@ tailwind.config = {
         <div class="p-4 border-t border-stone-800 flex items-center gap-3 bg-black/30">
 
             <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-hotel-gold to-hotel-goldLight flex items-center justify-center text-hotel-dark font-bold">
-                SG
+                SK
             </div>
 
             <div>
                 <h4 class="text-sm font-semibold text-white">
-                    Staf Gudang
+                    Staf Keuangan
                 </h4>
 
                 <p class="text-xs text-stone-500">
-                    Inventory Officer
+                    Finance Officer
                 </p>
             </div>
 
@@ -170,7 +156,7 @@ tailwind.config = {
                 </h2>
 
                 <p class="text-[11px] text-stone-500">
-                    Sistem Informasi Manajemen Persediaan Gudang
+                    Sistem Informasi Manajemen kas dan penagihan
                 </p>
             </div>
 
