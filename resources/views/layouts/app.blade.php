@@ -89,7 +89,7 @@
                         Modul Utama
                     </p>
 
-<a href="{{ route('inventory.index') }}"
+                    <a href="{{ route('inventory.index') }}"
                         class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.index') ? 'sidebar-active' : '' }}">
 
                         <div class="flex items-center gap-3">
@@ -132,48 +132,21 @@
 
                     </a>
 
-                    <form method="POST" action="{{ route('logout') }}" class="w-full mt-2 border-t border-stone-800 pt-2">
-                        @csrf
-                        <button type="submit"
-                            class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white">
+                    <a href="{{ route('hrd.jadwal-shift.index') }}"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('hrd.jadwal-shift.*') ? 'sidebar-active' : '' }}">
 
-                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <i data-lucide="calendar-clock" class="w-4 h-4"></i>
 
-                            <span>Keluar</span>
-
-                        </button>
-                    </form>
-
-                </nav>
-
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                            <span>Dashboard & Stok</span>
-                        </div>
-
-                        @if(($totalWarning ?? 0) > 0)
-                        <span class="bg-red-500 text-white text-[10px] px-2 py-1 rounded-full">
-                            {{ $totalWarning ?? 0 }}
-                        </span>
-                        @endif
+                        <span>Jadwal Shift</span>
 
                     </a>
 
-                    <a href="{{ route('inventory.mutasi') }}"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.mutasi') ? 'sidebar-active' : '' }}">
+                    <a href="{{ route('hrd.jadwalkerja') }}"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('hrd.jadwalkerja') ? 'sidebar-active' : '' }}">
 
-                        <i data-lucide="arrow-left-right" class="w-4 h-4 text-hotel-gold"></i>
+                        <i data-lucide="calendar-days" class="w-4 h-4"></i>
 
-                        <span>Mutasi Stok</span>
-
-                    </a>
-
-                    <a href="{{ route('inventory.laporan') }}"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.laporan') ? 'sidebar-active' : '' }}">
-
-                        <i data-lucide="history" class="w-4 h-4"></i>
-
-                        <span>Riwayat Laporan</span>
+                        <span>Jadwal Kerja</span>
 
                     </a>
 
@@ -188,7 +161,6 @@
 
                         </button>
                     </form>
-
 
                 </nav>
 
@@ -258,7 +230,7 @@
                                 </h3>
 
                                 <p class="text-xs text-stone-500">
-{{ $totalWarning ?? 0 }} item membutuhkan restock
+                                    {{ $totalWarning ?? 0 }} item membutuhkan restock
                                 </p>
 
                             </div>

@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware(['auth'])->prefix('hrd')->name('hrd.')->group(function () {
+Route::middleware(['auth'])->prefix('hrd')->name('hrd.')->group(function ()  {
     Route::resource('jadwal-shift', JadwalShiftController::class)->except(['show']);
     Route::get('/jadwalkerja', [JadwalKerjaController::class, 'index'])->name('jadwalkerja');
 });
