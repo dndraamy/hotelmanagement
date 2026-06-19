@@ -204,14 +204,14 @@
                                 </h3>
 
                                 <p class="text-xs text-stone-500">
-{{ $totalWarning ?? 0 }} item membutuhkan restock
+                                    {{ $totalWarning ?? 0 }} item membutuhkan restock
                                 </p>
 
                             </div>
 
                             <div class="max-h-80 overflow-y-auto">
 
-                             @forelse($stokMenipisList ?? [] as $item)
+                                @forelse($stokMenipisList ?? [] as $item)
 
                                 <div class="p-4 border-b hover:bg-stone-50">
 

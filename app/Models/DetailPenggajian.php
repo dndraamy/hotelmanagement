@@ -15,7 +15,7 @@ class DetailPenggajian extends Model
         return $this->belongsTo(Penggajian::class, 'id_penggajian', 'id_penggajian');
     }
 
-    public function komponenGaji()
+    public function komponen()
     {
         return $this->belongsTo(KomponenGaji::class, 'id_komponen', 'id_komponen');
     }
