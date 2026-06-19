@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HousekeepingController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\Pegawai\KehadiranController as PegawaiKehadiranController;
 use App\Http\Controllers\HRD\KehadiranController as HRDKehadiranController;
@@ -8,7 +9,6 @@ use App\Http\Controllers\Pegawai\PengajuanCutiController;
 use App\Http\Controllers\HRD\PenggajianController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiKasController;
-use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PenggabunganTagihanController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +60,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/kas/store', [TransaksiKasController::class, 'store'])->name('kas.store');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/housekeeping', [HousekeepingController::class, 'index'])
+        ->name('housekeeping.index');
+        Route::post('/housekeeping/{id}/bersih', [HousekeepingController::class, 'tandaiBersih'])
+    ->name('housekeeping.bersih');
+});
+
+require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/inventory', [InventoryController::class, 'index'])
