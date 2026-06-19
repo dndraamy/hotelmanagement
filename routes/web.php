@@ -10,9 +10,39 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    // Role-based Dashboards
+    Route::get('/dashboard/manager', function () {
+        return view('dashboard');
+    })->middleware('role:Manajer Hotel')->name('dashboard.manager');
+    Route::get('/dashboard/receptionist', function () {
+        return view('dashboard');
+    })->middleware('role:Resepsionis')->name('dashboard.receptionist');
+    Route::get('/dashboard/finance', function () {
+        return view('dashboard');
+    })->middleware('role:Staf Keuangan')->name('dashboard.finance');
+    Route::get('/dashboard/restaurant', function () {
+        return view('dashboard');
+    })->middleware('role:Petugas Restoran')->name('dashboard.restaurant');
+    Route::get('/dashboard/cleaning', function () {
+        return view('dashboard');
+    })->middleware('role:Petugas Kebersihan')->name('dashboard.cleaning');
+    Route::get('/dashboard/hrd', function () {
+        return view('dashboard');
+    })->middleware('role:Staf HRD')->name('dashboard.hrd');
+    Route::get('/dashboard/employee', function () {
+        return view('dashboard');
+    })->middleware('role:Karyawan')->name('dashboard.employee');
+    Route::get('/dashboard/warehouse', function () {
+        return view('dashboard');
+    })->middleware('role:Staf Gudang')->name('dashboard.warehouse');
+    Route::get('/dashboard/admin', function () {
+        return view('dashboard');
+    })->middleware('role:Super Admin')->name('dashboard.admin');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -53,4 +83,4 @@ Route::post('/kas/penggabungan-tagihan/merge', [PenggabunganTagihanController::c
 Route::post('/kas/penggabungan-tagihan/unmerge', [PenggabunganTagihanController::class, 'unmerge'])
     ->name('penggabungan-tagihan.unmerge');
 });
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
