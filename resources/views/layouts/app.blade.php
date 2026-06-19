@@ -97,9 +97,9 @@
                             <span>Dashboard & Stok</span>
                         </div>
 
-                        @if(($totalWarning ?? 0) > 0)
+                    @if(isset($totalWarning) && $totalWarning ?? 0> 0)
                         <span class="bg-red-500 text-white text-[10px] px-2 py-1 rounded-full">
-                            {{ $totalWarning ?? 0 }}
+                            {{ $totalWarning ?? 0}}
                         </span>
                         @endif
 
@@ -172,23 +172,7 @@
                         RBPL Hotel
                     </h2>
 
-                    <p class="text-[10px] text-stone-500">
-                        Sistem Informasi Manajemen Persediaan Gudang
-                    </p>
-                </div>
-
-                <div class="flex items-center gap-4">
-
-                    <!-- NOTIFICATION -->
-                    <div class="relative">
-
-                        <button
-                            onclick="document.getElementById('notifDropdown').classList.toggle('hidden')"
-                            class="relative p-2 rounded-full hover:bg-stone-100 transition">
-
-                            <i data-lucide="bell" class="w-5 h-5 text-stone-700"></i>
-
-                            @if(($totalWarning ?? 0) > 0)
+                        @if(isset($totalWarning) && $totalWarning ?? 0> 0)
                             <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
                             @endif
 
@@ -203,15 +187,15 @@
                                     Peringatan Stok Minimum
                                 </h3>
 
-                                <p class="text-xs text-stone-500">
-                                    {{ $totalWarning ?? 0 }} item membutuhkan restock
-                                </p>
+                            <p class="text-xs text-stone-500">
+                                {{ $totalWarning ?? 0?? 0 }} item membutuhkan restock
+                            </p>
 
                             </div>
 
                             <div class="max-h-80 overflow-y-auto">
 
-                                @forelse($stokMenipisList ?? [] as $item)
+                            @forelse($stokMenipisList ?? [] as $item)
 
                                 <div class="p-4 border-b hover:bg-stone-50">
 
@@ -286,5 +270,4 @@
     </script>
 
 </body>
-
 </html>

@@ -67,9 +67,15 @@ Route::middleware('auth')->group(function () {
     ->name('housekeeping.bersih');
 });
 
+use App\Http\Controllers\HRD\JadwalShiftController;
+
+Route::middleware(['auth', 'role:HRD'])->prefix('hrd')->name('hrd.')->group(function () {
+    Route::resource('jadwal-shift', JadwalShiftController::class)->except(['show']);
+});
 require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function () {
 
+Route::middleware(['auth'])->group(function () {
     Route::get('/inventory', [InventoryController::class, 'index'])
         ->name('inventory.index');
 
@@ -84,7 +90,25 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])
         ->name('inventory.laporan');
+});
 
+use App\Http\Controllers\Manajer\LaporanKeuanganController;
+
+Route::middleware(['auth', 'role:Manajer Hotel'])
+    ->prefix('manajer')
+    ->name('manajer.')
+    ->group(function () {
+
+Route::get('/laporan-keuangan', [LaporanKeuanganController::class, 'index'])
+         ->name('laporan-keuangan.index');
+
+Route::get(
+    '/laporan-keuangan/export-pdf',
+    [LaporanKeuanganController::class, 'exportPdf']
+)->name('laporan-keuangan.export-pdf');
+});
+
+require __DIR__.'/auth.php';
     Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
         Route::get('/', [PegawaiKehadiranController::class, 'index'])->name('index');
         Route::post('/checkin', [PegawaiKehadiranController::class, 'checkIn'])->name('checkin');
