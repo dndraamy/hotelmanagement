@@ -61,6 +61,9 @@ Route::middleware(['auth'])->group(function () {
 
         // Charge to Room: update status_pembayaran dan id_reservasi
         Route::patch('/{id_pesanan}/charge-to-room', [PosRestoranController::class, 'chargeToRoom'])->name('charge-to-room');
+
+        // Cetak Struk Dapur
+        Route::get('/{id_pesanan}/cetak-dapur', [PosRestoranController::class, 'cetakStrukDapur'])->name('cetak-dapur');
     });
 
     // ─── Room Charge Terminal ────────────────────────────────────────────────

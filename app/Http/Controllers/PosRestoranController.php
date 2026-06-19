@@ -190,4 +190,31 @@ class PosRestoranController extends Controller
                 ->withInput();
         }
     }
+
+    /**
+     * Cetak Struk Dapur (Lembar Instruksi Pembuatan Makanan).
+     * Format PDF sederhana tanpa menampilkan harga.
+     */
+    public function cetakStrukDapur($id_pesanan)
+    {
+        $pesanan = PesananRestoran::with([
+            'detailPesananRestoran.itemMenu',
+            'reservasi.tamu',
+            'reservasi.detailKamar.kamar',
+        ])->findOrFail($id_pesanan);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pos-restoran.struk-dapur', compact('pesanan'));
+        
+        // Kalkulasi tinggi kertas dinamis menyesuaikan jumlah item
+        // Tinggi dasar (header, info tamu, footer) sekitar ~280pt
+        // Tinggi per item makanan sekitar ~35pt
+        $tinggiDasar = 280; 
+        $tinggiPerItem = 35;
+        $totalTinggi = $tinggiDasar + ($pesanan->detailPesananRestoran->count() * $tinggiPerItem);
+
+        // Atur ukuran kertas: Lebar 226pt (~80mm), Tinggi mengikuti jumlah item
+        $pdf->setPaper(array(0, 0, 226, $totalTinggi), 'portrait'); 
+
+        return $pdf->stream('Struk_Dapur_Pesanan_' . $pesanan->id_pesanan . '.pdf');
+    }
 }

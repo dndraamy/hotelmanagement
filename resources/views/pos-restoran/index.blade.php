@@ -798,8 +798,9 @@
         {{-- ── SELECTED PESANAN (jika dari klik pesanan pending) ── --}}
         @if($selectedPesanan)
         <div style="padding: 16px 24px; background: var(--accent-light); border-bottom: 1px solid #E8D88A;">
-            <div style="font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent-hover); margin-bottom: 10px;">
-                Pesanan Dipilih #{{ str_pad($selectedPesanan->id_pesanan, 4, '0', STR_PAD_LEFT) }}
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent-hover); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span>Pesanan Dipilih #{{ str_pad($selectedPesanan->id_pesanan, 4, '0', STR_PAD_LEFT) }}</span>
+                <a href="{{ route('pos-restoran.cetak-dapur', $selectedPesanan->id_pesanan) }}" target="_blank" class="btn-secondary" style="margin-top: 0; padding: 4px 8px; width: auto; font-size: 10px; display: inline-flex;">Cetak Dapur</a>
             </div>
             @foreach($selectedPesanan->detailPesananRestoran as $detail)
             <div style="display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-secondary); padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
