@@ -10,12 +10,14 @@ use App\Http\Controllers\HRD\KehadiranController as HRDKehadiranController;
 use App\Http\Controllers\HRD\ApprovalCutiController;
 use App\Http\Controllers\Pegawai\PengajuanCutiController;
 use App\Http\Controllers\HRD\PenggajianController;
+use App\Http\Controllers\HRD\JadwalShiftController;
+use App\Http\Controllers\HRD\JadwalKerjaController;
 use App\Http\Controllers\PosRestoranController;
 use App\Http\Controllers\RoomChargeController;
-use App\Http\Controllers\HRD\JadwalShiftController;
 use App\Http\Controllers\TransaksiKasController;
 use App\Http\Controllers\PenggabunganTagihanController;
 use App\Http\Controllers\Manajer\LaporanKeuanganController;
+use App\Http\Controllers\PegawaiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('welcome'));
@@ -35,7 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    // Kas
+    // Kas & Tagihan
     Route::get('/kas/pemasukan', [TransaksiKasController::class, 'pemasukan'])->name('kas.pemasukan');
     Route::get('/kas/pengeluaran', [TransaksiKasController::class, 'pengeluaran'])->name('kas.pengeluaran');
     Route::post('/kas/store', [TransaksiKasController::class, 'store'])->name('kas.store');
@@ -48,25 +50,14 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // ─── POS Restoran ────────────────────────────────────────────────────────
+    // POS & Room Charge
     Route::prefix('pos-restoran')->name('pos-restoran.')->group(function () {
-        // Halaman utama POS
         Route::get('/', [PosRestoranController::class, 'index'])->name('index');
-
-        // API: Daftar tamu Checked-In (untuk dropdown dinamis)
         Route::get('/api/tamu-checkedin', [PosRestoranController::class, 'getCheckedInGuests'])->name('tamu-checkedin');
-
-        // Buat pesanan baru dari keranjang
         Route::post('/buat-pesanan', [PosRestoranController::class, 'buatPesanan'])->name('buat-pesanan');
-
-        // Charge to Room: update status_pembayaran dan id_reservasi
         Route::patch('/{id_pesanan}/charge-to-room', [PosRestoranController::class, 'chargeToRoom'])->name('charge-to-room');
-
-        // Cetak Struk Dapur
         Route::get('/{id_pesanan}/cetak-dapur', [PosRestoranController::class, 'cetakStrukDapur'])->name('cetak-dapur');
     });
-
-    // ─── Room Charge Terminal ────────────────────────────────────────────────
     Route::prefix('room-charge')->name('room-charge.')->group(function () {
         Route::get('/', [RoomChargeController::class, 'index'])->name('index');
         Route::post('/store', [RoomChargeController::class, 'store'])->name('store');
@@ -83,7 +74,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/reservasi/{id}', [ReservasiController::class, 'destroy'])->name('reservasi.destroy');
     Route::get('/reservasi/{id}/pembayaran-dp', [ReservasiController::class, 'formPembayaranDP'])->name('reservasi.pembayaran-dp');
     Route::post('/reservasi/{id}/simpan-dp', [ReservasiController::class, 'simpanPembayaranDP'])->name('reservasi.simpan-dp');
-
     Route::get('/checkin', [CheckInController::class, 'index'])->name('checkin.index');
     Route::get('/checkin/{id}', [CheckInController::class, 'show'])->name('checkin.show');
     Route::post('/checkin/{id}/proses', [CheckInController::class, 'proses'])->name('checkin.proses');
@@ -95,12 +85,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::get('/inventory/mutasi', [InventoryController::class, 'mutasi'])->name('inventory.mutasi');
     Route::post('/inventory/masuk', [InventoryController::class, 'barangMasuk'])->name('inventory.masuk');
-    Route::post('/inventory/keluar', [InventoryController::class, 'barangKeluar'])->name('inventory.barangKeluar');
+    Route::post('/inventory/keluar', [InventoryController::class, 'barangKeluar'])->name('inventory.keluar');
     Route::get('/inventory/laporan', [InventoryController::class, 'laporan'])->name('inventory.laporan');
     Route::get('/housekeeping', [HousekeepingController::class, 'index'])->name('housekeeping.index');
     Route::post('/housekeeping/{id}/bersih', [HousekeepingController::class, 'tandaiBersih'])->name('housekeeping.bersih');
 
-    // Kehadiran & Cuti Pegawai
+    // Pegawai & Kehadiran
     Route::prefix('kehadiran')->name('kehadiran.')->group(function () {
         Route::get('/', [PegawaiKehadiranController::class, 'index'])->name('index');
         Route::post('/checkin', [PegawaiKehadiranController::class, 'checkIn'])->name('checkin');
@@ -108,11 +98,23 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::get('/pegawai/form_pengajuan', [PengajuanCutiController::class, 'create'])->name('pegawai.cuti.create');
     Route::post('/pegawai/form_pengajuan', [PengajuanCutiController::class, 'store'])->name('pegawai.cuti.store');
+    
+    // CRUD Pegawai (dari branch HEAD)
+    Route::prefix('pegawai')->name('pegawai.')->group(function () {
+        Route::get('/', [PegawaiController::class, 'index'])->name('index');
+        Route::get('/create', [PegawaiController::class, 'create'])->name('create');
+        Route::post('/', [PegawaiController::class, 'store'])->name('store');
+        Route::get('/{pegawai}/edit', [PegawaiController::class, 'edit'])->name('edit');
+        Route::put('/{pegawai}', [PegawaiController::class, 'update'])->name('update');
+        Route::delete('/{pegawai}', [PegawaiController::class, 'destroy'])->name('destroy');
+    });
 });
 
 // HRD Routes
-Route::middleware(['auth', 'role:HRD'])->prefix('hrd')->name('hrd.')->group(function () {
+Route::middleware(['auth'])->prefix('hrd')->name('hrd.')->group(function () {
     Route::resource('jadwal-shift', JadwalShiftController::class)->except(['show']);
+    Route::get('/jadwalkerja', [JadwalKerjaController::class, 'index'])->name('jadwalkerja');
+    
     Route::prefix('dashboard/hrd')->name('dashboard.hrd.')->group(function () {
         Route::get('/kehadiran', [HRDKehadiranController::class, 'index'])->name('kehadiran.index');
         Route::get('/cuti', [ApprovalCutiController::class, 'index'])->name('cuti.index');
