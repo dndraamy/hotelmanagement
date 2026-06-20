@@ -10,6 +10,8 @@ use App\Http\Controllers\HRD\KehadiranController as HRDKehadiranController;
 use App\Http\Controllers\HRD\ApprovalCutiController;
 use App\Http\Controllers\Pegawai\PengajuanCutiController;
 use App\Http\Controllers\HRD\PenggajianController;
+use App\Http\Controllers\PosRestoranController;
+use App\Http\Controllers\RoomChargeController;
 use App\Http\Controllers\HRD\JadwalShiftController;
 use App\Http\Controllers\TransaksiKasController;
 use App\Http\Controllers\PenggabunganTagihanController;
@@ -45,6 +47,30 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // ─── POS Restoran ────────────────────────────────────────────────────────
+    Route::prefix('pos-restoran')->name('pos-restoran.')->group(function () {
+        // Halaman utama POS
+        Route::get('/', [PosRestoranController::class, 'index'])->name('index');
+
+        // API: Daftar tamu Checked-In (untuk dropdown dinamis)
+        Route::get('/api/tamu-checkedin', [PosRestoranController::class, 'getCheckedInGuests'])->name('tamu-checkedin');
+
+        // Buat pesanan baru dari keranjang
+        Route::post('/buat-pesanan', [PosRestoranController::class, 'buatPesanan'])->name('buat-pesanan');
+
+        // Charge to Room: update status_pembayaran dan id_reservasi
+        Route::patch('/{id_pesanan}/charge-to-room', [PosRestoranController::class, 'chargeToRoom'])->name('charge-to-room');
+
+        // Cetak Struk Dapur
+        Route::get('/{id_pesanan}/cetak-dapur', [PosRestoranController::class, 'cetakStrukDapur'])->name('cetak-dapur');
+    });
+
+    // ─── Room Charge Terminal ────────────────────────────────────────────────
+    Route::prefix('room-charge')->name('room-charge.')->group(function () {
+        Route::get('/', [RoomChargeController::class, 'index'])->name('index');
+        Route::post('/store', [RoomChargeController::class, 'store'])->name('store');
+    });
 
     // Reservasi & Check-in
     Route::get('/reservasi', [ReservasiController::class, 'index'])->name('reservasi.index');
