@@ -6,9 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kamar extends Model
 {
-    protected $table = 'kamar';
+    protected $table      = 'kamar';
     protected $primaryKey = 'id_kamar';
-    protected $fillable = ['nomor_kamar', 'lantai', 'id_tipe', 'status_kamar'];
+
+    protected $fillable = [
+        'nomor_kamar',
+        'lantai',
+        'id_tipe',
+        'status_kamar',
+    ];
 
     public function tipeKamar()
     {

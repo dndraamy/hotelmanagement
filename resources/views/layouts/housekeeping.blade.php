@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>RBPL Hotel - Inventory Management</title>
+    <title>RBPL Hotel - Housekeeping Management</title>
 
     <link rel="icon" href="{{ asset('favicon.ico') }}">
 
@@ -56,6 +56,7 @@ tailwind.config = {
                 }
             }
         }
+    }
     </script>
 
     <style>
@@ -108,49 +109,13 @@ tailwind.config = {
                     Modul Utama
                 </p>
 
-                <a href="{{ route('inventory.index') }}"
+                <a href="{{ route('housekeeping.index') }}"
                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.index') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                    <span>Dashboard & Stok</span>
+                    <span>Dashboard Housekeeping</span>
 
                 </a>
-
-                <a href="{{ route('inventory.mutasi') }}"
-                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.mutasi') ? 'sidebar-active' : '' }}">
-
-                    <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
-                    <span>Mutasi Stok</span>
-
-                </a>
-
-                <a href="{{ route('inventory.laporan') }}"
-                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.laporan') ? 'sidebar-active' : '' }}">
-
-                    <i data-lucide="history" class="w-4 h-4"></i>
-                    <span>Riwayat Laporan</span>
-
-                </a>
-
-                <a href="{{ route('pegawai.index') }}"
-                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('pegawai.*') ? 'sidebar-active' : '' }}">
-
-                    <i data-lucide="users" class="w-4 h-4"></i>
-                    <span>Daftar Pegawai</span>
-
-                </a>
-
-                <form method="POST" action="{{ route('logout') }}" class="w-full mt-2 border-t border-stone-800 pt-2">
-                    @csrf
-                    <button type="submit"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white">
-
-                        <i data-lucide="log-out" class="w-4 h-4"></i>
-
-                        <span>Keluar</span>
-
-                    </button>
-                </form>
 
             </nav>
 
@@ -189,7 +154,7 @@ tailwind.config = {
                 </h2>
 
                 <p class="text-[11px] text-stone-500">
-                    Sistem Informasi Manajemen Persediaan Gudang
+                    Sistem Informasi Housekeeping Hotel
                 </p>
             </div>
 
