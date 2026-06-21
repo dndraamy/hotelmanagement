@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiKasController;
 use App\Http\Controllers\PenggabunganTagihanController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Manajer\LaporanKeuanganController; 
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,9 +22,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
     // Role-based Dashboards
-    Route::get('/dashboard/manager', function () {
-        return view('dashboard');
-    })->middleware('role:Manajer Hotel')->name('dashboard.manager');
+    // Route::get('/dashboard/manager', function () {
+    //     return view('dashboard');
+    // })->middleware('role:Manajer Hotel')->name('dashboard.manager');
+    Route::get('/dashboard/manager', [LaporanKeuanganController::class, 'index'])
+    ->middleware('role:Manajer Hotel')
+    ->name('dashboard.manager'); 
     Route::get('/dashboard/receptionist', function () {
         return view('dashboard');
     })->middleware('role:Resepsionis')->name('dashboard.receptionist');
@@ -92,7 +96,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('inventory.laporan');
 });
 
-use App\Http\Controllers\Manajer\LaporanKeuanganController;
+// use App\Http\Controllers\Manajer\LaporanKeuanganController;
 
 Route::middleware(['auth', 'role:Manajer Hotel'])
     ->prefix('manajer')
@@ -131,7 +135,7 @@ require __DIR__.'/auth.php';
 
     
   // ─── Penggabungan Tagihan ────────────────────────────────────────────────
-  Route::get('/kas/penggabungan-tagihan', [PenggabunganTagihanController::class, 'index'])
+Route::get('/kas/penggabungan-tagihan', [PenggabunganTagihanController::class, 'index'])
     ->name('penggabungan-tagihan.index');
 
 Route::post('/kas/penggabungan-tagihan/merge', [PenggabunganTagihanController::class, 'merge'])
