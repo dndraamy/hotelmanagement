@@ -20,7 +20,7 @@ use App\Http\Controllers\Manajer\LaporanKeuanganController;
 use App\Http\Controllers\PegawaiController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => view('welcome'));
+Route::get('/', fn () => redirect()->route('login'));
 
 // Middleware Auth
 Route::middleware(['auth', 'verified'])->group(function () {

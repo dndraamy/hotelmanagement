@@ -11,7 +11,7 @@
     <div class="bg-white rounded-2xl shadow-sm border p-6">
         <h2 class="text-lg font-bold text-gray-800 mb-4">Generate Gaji Bulanan</h2>
         
-        <form action="{{ route('dashboard.hrd.penggajian.generate') }}" method="POST" class="flex flex-col md:flex-row gap-4 items-end">
+        <form action="{{ route('hrd.dashboard.hrd.penggajian.generate') }}" method="POST" class="flex flex-col md:flex-row gap-4 items-end">
             @csrf
             <div class="w-full md:w-1/3">
                 <label class="block text-sm font-semibold text-gray-600 mb-2">Periode Bulan</label>
@@ -45,7 +45,7 @@
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-base font-bold text-gray-800">Riwayat Penggajian (Periode: {{ $bulan }}/{{ $tahun }})</h3>
             
-            <form action="{{ route('dashboard.hrd.penggajian.index') }}" method="GET" class="flex gap-2">
+            <form action="{{ route('hrd.dashboard.hrd.penggajian.index') }}" method="GET" class="flex gap-2">
                 <input type="hidden" name="bulan" value="{{ $bulan }}">
                 <input type="hidden" name="tahun" value="{{ $tahun }}">
                 <button type="submit" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-200">Refresh Data</button>
@@ -74,7 +74,7 @@
                             <td class="p-4 text-red-600">Rp {{ number_format($gaji->total_potongan, 0, ',', '.') }}</td>
                             <td class="p-4 font-bold text-gray-800">Rp {{ number_format($gaji->gaji_bersih, 0, ',', '.') }}</td>
                             <td class="p-4 text-center">
-                                <a href="{{ route('dashboard.hrd.penggajian.cetak', $gaji->id_penggajian) }}" target="_blank" class="bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1.5 rounded-lg text-xs font-semibold inline-flex items-center gap-1">
+                                <a href="{{ route('hrd.dashboard.hrd.penggajian.cetak', $gaji->id_penggajian) }}" target="_blank" class="bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1.5 rounded-lg text-xs font-semibold inline-flex items-center gap-1">
                                     Cetak Slip
                                 </a>
                             </td>

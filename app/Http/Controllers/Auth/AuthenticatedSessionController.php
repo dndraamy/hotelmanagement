@@ -31,15 +31,15 @@ class AuthenticatedSessionController extends Controller
 
         $roleName = $request->user()->roles->first()?->name;
         $redirectRoute = match ($roleName) {
-            'Manajer Hotel' => 'dashboard.manager',
-            'Resepsionis' => 'dashboard.receptionist',
-            'Staf Keuangan' => 'dashboard.finance',
-            'Petugas Restoran' => 'dashboard.restaurant',
-            'Petugas Kebersihan' => 'dashboard.cleaning',
+            'Manajer Hotel' => 'manajer.laporan-keuangan.index',
+            'Resepsionis' => 'reservasi.index',
+            'Staf Keuangan' => 'kas.pemasukan',
+            'Petugas Restoran' => 'pos-restoran.index',
+            'Petugas Kebersihan' => 'housekeeping.index',
             'Staf HRD' => 'dashboard.hrd',
-            'Karyawan' => 'dashboard.employee',
-            'Staf Gudang' => 'dashboard.warehouse',
-            'Super Admin' => 'dashboard.admin',
+            'Karyawan' => 'kehadiran.index',
+            'Staf Gudang' => 'inventory.index',
+            'Super Admin' => 'pegawai.index',
             default => 'dashboard',
         };
         return redirect()->intended(route($redirectRoute, absolute: false));

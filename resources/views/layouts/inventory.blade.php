@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>RBPL Hotel - Housekeeping Management</title>
+    <title>RBPL Hotel - Inventory Management</title>
 
     <link rel="icon" href="{{ asset('favicon.ico') }}">
 
@@ -112,13 +112,43 @@ tailwind.config = {
                     Modul Utama
                 </p>
 
-                <a href="{{ route('housekeeping.index') }}"
-                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('housekeeping.*') ? 'sidebar-active' : '' }}">
+                <a href="{{ route('inventory.index') }}"
+                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.index') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                    <span>Dashboard Housekeeping</span>
+                    <span>Dashboard & Stok</span>
 
                 </a>
+
+                <a href="{{ route('inventory.mutasi') }}"
+                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.mutasi') ? 'sidebar-active' : '' }}">
+
+                    <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                    <span>Mutasi Stok</span>
+
+                </a>
+
+                <a href="{{ route('inventory.laporan') }}"
+                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.laporan') ? 'sidebar-active' : '' }}">
+
+                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                    <span>Laporan Inventory</span>
+
+                </a>
+
+                @hasrole('Super Admin|Staf HRD')
+                <p class="text-[10px] uppercase tracking-widest text-stone-500 px-3 mb-3 mt-6 font-semibold">
+                    Manajemen SDM
+                </p>
+
+                <a href="{{ route('pegawai.index') }}"
+                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('pegawai.*') ? 'sidebar-active' : '' }}">
+
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    <span>Daftar Pegawai</span>
+
+                </a>
+                @endhasrole
 
                 <form method="POST" action="{{ route('logout') }}" class="w-full mt-2 border-t border-stone-800 pt-2">
                     @csrf
@@ -145,11 +175,11 @@ tailwind.config = {
 
             <div>
                 <h4 class="text-sm font-semibold text-white">
-                    {{ Auth::user()->username ?? 'Petugas' }}
+                    {{ Auth::user()->username ?? 'Staf Gudang' }}
                 </h4>
 
                 <p class="text-xs text-stone-500">
-                    {{ Auth::user()->roles->first()->name ?? 'Housekeeping' }}
+                    {{ Auth::user()->roles->first()->name ?? 'Inventory Officer' }}
                 </p>
             </div>
 
@@ -169,7 +199,7 @@ tailwind.config = {
                 </h2>
 
                 <p class="text-[11px] text-stone-500">
-                    Sistem Informasi Housekeeping Hotel
+                    Sistem Informasi Manajemen Persediaan Gudang
                 </p>
             </div>
 
@@ -291,4 +321,3 @@ tailwind.config = {
 
 </body>
 </html>
-```
