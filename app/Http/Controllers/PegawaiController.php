@@ -15,7 +15,7 @@ class PegawaiController extends Controller
     public function index()
     {
         $pegawais = Pegawai::with(['divisi', 'jabatan'])->orderBy('nama_lengkap')->get();
-        return view('pegawai.index', compact('pegawais'));
+        return view('dashboard.hrd.pegawai.index', compact('pegawais'));
     }
 
     public function create()
@@ -23,7 +23,7 @@ class PegawaiController extends Controller
         $divisi = Divisi::all();
         $jabatan = Jabatan::all();
 
-        return view('pegawai.create', compact('divisi', 'jabatan'));
+        return view('dashboard.hrd.pegawai.create', compact('divisi', 'jabatan'));
     }
 
     /**
@@ -41,7 +41,7 @@ class PegawaiController extends Controller
 
         Pegawai::create($validated);
 
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan.');
+        return redirect()->route('hrd.dashboard.hrd.pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan.');
     }
 
     public function edit(Pegawai $pegawai)
@@ -49,7 +49,7 @@ class PegawaiController extends Controller
         $divisi = Divisi::all();
         $jabatan = Jabatan::all();
         
-        return view('pegawai.edit', compact('pegawai', 'divisi', 'jabatan'));
+        return view('dashboard.hrd.pegawai.edit', compact('pegawai', 'divisi', 'jabatan'));
     }
 
     public function update(Request $request, Pegawai $pegawai)
@@ -64,13 +64,13 @@ class PegawaiController extends Controller
 
         $pegawai->update($validated);
 
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diubah.');
+        return redirect()->route('hrd.dashboard.hrd.pegawai.index')->with('success', 'Data pegawai berhasil diubah.');
     }
 
     public function destroy(Pegawai $pegawai)
     {
         $pegawai->delete();
 
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
+        return redirect()->route('hrd.dashboard.hrd.pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
     }
 }

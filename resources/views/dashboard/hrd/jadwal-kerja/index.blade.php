@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.hrd')
+@section('content')
+
     <div class="py-8 px-4 sm:px-8" style="background:#FAF9F6; min-height:100vh; font-family:'Montserrat',sans-serif;">
 
         @if(session('success'))
@@ -24,7 +26,7 @@
 
             {{-- Filter --}}
             <form method="GET"
-                  action="{{ route('hrd.jadwalkerja') }}"
+                  action="{{ route('hrd.dashboard.hrd.jadwalkerja') }}"
                   class="flex flex-wrap gap-3 mb-6 items-end">
 
                 <div>
@@ -145,4 +147,5 @@
 
         </div>
     </div>
-</x-app-layout>
+    
+@endsection

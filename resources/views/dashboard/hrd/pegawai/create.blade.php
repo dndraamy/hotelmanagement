@@ -1,4 +1,4 @@
-@extends('layouts.inventory')
+@extends('layouts.hrd')
 
 @section('content')
 <div class="max-w-2xl mx-auto space-y-6">
@@ -6,16 +6,11 @@
     <div class="flex items-center justify-between border-b border-stone-200 pb-4">
         <div>
             <h1 class="text-2xl font-bold text-hotel-dark">
-                Ubah Data Pegawai
+                Tambah Pegawai Baru
             </h1>
             <p class="text-sm text-stone-500 mt-1">
-                Perbarui detail informasi pegawai yang dipilih.
+                Masukkan detail informasi pegawai baru untuk disimpan ke sistem.
             </p>
-        </div>
-        <div>
-            <a href="{{ route('pegawai.index') }}" class="inline-flex items-center gap-2 text-stone-500 hover:text-hotel-dark font-medium transition text-sm">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Daftar Pegawai
-            </a>
         </div>
     </div>
 
@@ -36,9 +31,8 @@
 
     <!-- FORM CARD -->
     <div class="bg-white border border-stone-200 rounded-2xl shadow-sm overflow-hidden">
-        <form action="{{ route('pegawai.update', $pegawai->id_pegawai) }}" method="POST" class="p-6 space-y-5">
+        <form action="{{ route('hrd.dashboard.hrd.pegawai.store') }}" method="POST" class="p-6 space-y-5">
             @csrf
-            @method('PUT')
 
             <!-- NAMA LENGKAP -->
             <div>
@@ -48,7 +42,7 @@
                 <input 
                     type="text" 
                     name="nama_lengkap" 
-                    value="{{ old('nama_lengkap', $pegawai->nama_lengkap) }}"
+                    value="{{ old('nama_lengkap') }}"
                     placeholder="Contoh: Budi Santoso"
                     class="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition" 
                     required>
@@ -62,7 +56,7 @@
                 <input 
                     type="text" 
                     name="kontak" 
-                    value="{{ old('kontak', $pegawai->kontak) }}"
+                    value="{{ old('kontak') }}"
                     placeholder="Contoh: 08123456789"
                     class="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition" 
                     required>
@@ -78,7 +72,7 @@
                     rows="3"
                     placeholder="Masukkan alamat lengkap..."
                     class="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition" 
-                    required>{{ old('alamat', $pegawai->alamat) }}</textarea>
+                    required>{{ old('alamat') }}</textarea>
             </div>
 
             <!-- DIVISI & JABATAN -->
@@ -88,9 +82,9 @@
                         Divisi
                     </label>
                     <select name="id_divisi" class="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition bg-white" required>
-                        <option value="" disabled>Pilih Divisi</option>
+                        <option value="" disabled selected>Pilih Divisi</option>
                         @foreach($divisi as $d)
-                            <option value="{{ $d->id_divisi }}" {{ old('id_divisi', $pegawai->id_divisi) == $d->id_divisi ? 'selected' : '' }}>
+                            <option value="{{ $d->id_divisi }}" {{ old('id_divisi') == $d->id_divisi ? 'selected' : '' }}>
                                 {{ $d->nama_divisi }}
                             </option>
                         @endforeach
@@ -102,9 +96,9 @@
                         Jabatan
                     </label>
                     <select name="id_jabatan" class="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition bg-white" required>
-                        <option value="" disabled>Pilih Jabatan</option>
+                        <option value="" disabled selected>Pilih Jabatan</option>
                         @foreach($jabatan as $j)
-                            <option value="{{ $j->id_jabatan }}" {{ old('id_jabatan', $pegawai->id_jabatan) == $j->id_jabatan ? 'selected' : '' }}>
+                            <option value="{{ $j->id_jabatan }}" {{ old('id_jabatan') == $j->id_jabatan ? 'selected' : '' }}>
                                 {{ $j->nama_jabatan }}
                             </option>
                         @endforeach
@@ -117,10 +111,16 @@
                 <button 
                     type="submit" 
                     class="flex-1 bg-hotel-dark hover:bg-black text-hotel-gold font-semibold py-3 rounded-xl transition">
-                    Simpan Perubahan
+                    Simpan Pegawai
                 </button>
             </div>
         </form>
     </div>
 </div>
+
+@if(session('success'))
+    <script>
+        console.log("Success: {{ session('success') }}");
+    </script>
+@endif
 @endsection

@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.hrd')
+@section('content')
+
     <div class="py-8 px-4 sm:px-8" style="background:#FAF9F6; min-height:100vh; font-family:'Montserrat',sans-serif;">
 
         {{-- Alert --}}
@@ -17,7 +19,7 @@
                     <h1 class="text-xl font-bold" style="color:#1A1A1A;">Jadwal Shift Karyawan</h1>
                     <p class="text-sm mt-0.5" style="color:#888;">Kelola jadwal shift seluruh pegawai hotel</p>
                 </div>
-                <a href="{{ route('hrd.jadwal-shift.create') }}"
+                <a href="{{ route('hrd.dashboard.hrd.jadwal-shift.create') }}"
                    class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition"
                    style="background:#D4AF37; color:#1A1A1A;">
                     + Tambah Jadwal
@@ -25,7 +27,7 @@
             </div>
 
             {{-- Filter --}}
-            <form method="GET" action="{{ route('hrd.jadwal-shift.index') }}"
+            <form method="GET" action="{{ route('hrd.dashboard.hrd.jadwal-shift.index') }}"
                   class="flex flex-wrap gap-3 mb-6 items-end">
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-wide mb-1" style="color:#888;">Bulan</label>
@@ -106,12 +108,12 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex gap-2">
-                                        <a href="{{ route('hrd.jadwal-shift.edit', $j->id_jadwal) }}"
+                                        <a href="{{ route('hrd.dashboard.hrd.jadwal-shift.edit', $j->id_jadwal) }}"
                                            class="px-3 py-1.5 rounded-lg text-xs font-semibold border transition"
                                            style="border-color:#D4AF37; color:#D4AF37;">
                                             Edit
                                         </a>
-                                        <form action="{{ route('hrd.jadwal-shift.destroy', $j->id_jadwal) }}"
+                                        <form action="{{ route('hrd.dashboard.hrd.jadwal-shift.destroy', $j->id_jadwal) }}"
                                               method="POST"
                                               x-data
                                               @submit.prevent="if(confirm('Hapus jadwal ini?')) $el.submit()">
@@ -132,4 +134,5 @@
             @endif
         </div>
     </div>
-</x-app-layout>
+
+@endsection

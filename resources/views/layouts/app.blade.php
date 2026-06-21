@@ -132,8 +132,8 @@
 
                     </a>
 
-                    <a href="{{ route('hrd.jadwal-shift.index') }}"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('hrd.jadwal-shift.*') ? 'sidebar-active' : '' }}">
+                    <a href="{{ route('hrd.dashboard.hrd.jadwal-shift.index') }}"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('hrd.dashboard.hrd.jadwal-shift.*') ? 'sidebar-active' : '' }}">
 
                         <i data-lucide="calendar-clock" class="w-4 h-4"></i>
 
@@ -141,8 +141,8 @@
 
                     </a>
 
-                    <a href="{{ route('hrd.jadwalkerja') }}"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('hrd.jadwalkerja') ? 'sidebar-active' : '' }}">
+                    <a href="{{ route('hrd.dashboard.hrd.jadwalkerja') }}"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('hrd.dashboard.hrd.jadwalkerja') ? 'sidebar-active' : '' }}">
 
                         <i data-lucide="calendar-days" class="w-4 h-4"></i>
 

@@ -99,23 +99,25 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pegawai/form_pengajuan', [PengajuanCutiController::class, 'create'])->name('pegawai.cuti.create');
     Route::post('/pegawai/form_pengajuan', [PengajuanCutiController::class, 'store'])->name('pegawai.cuti.store');
     
-    // CRUD Pegawai (dari branch HEAD)
-    Route::prefix('pegawai')->name('pegawai.')->group(function () {
-        Route::get('/', [PegawaiController::class, 'index'])->name('index');
-        Route::get('/create', [PegawaiController::class, 'create'])->name('create');
-        Route::post('/', [PegawaiController::class, 'store'])->name('store');
-        Route::get('/{pegawai}/edit', [PegawaiController::class, 'edit'])->name('edit');
-        Route::put('/{pegawai}', [PegawaiController::class, 'update'])->name('update');
-        Route::delete('/{pegawai}', [PegawaiController::class, 'destroy'])->name('destroy');
-    });
+    // // CRUD Pegawai (dari branch HEAD)
+    // Route::prefix('pegawai')->name('pegawai.')->group(function () {
+    //     Route::get('/', [PegawaiController::class, 'index'])->name('index');
+    //     Route::get('/create', [PegawaiController::class, 'create'])->name('create');
+    //     Route::post('/', [PegawaiController::class, 'store'])->name('store');
+    //     Route::get('/{pegawai}/edit', [PegawaiController::class, 'edit'])->name('edit');
+    //     Route::put('/{pegawai}', [PegawaiController::class, 'update'])->name('update');
+    //     Route::delete('/{pegawai}', [PegawaiController::class, 'destroy'])->name('destroy');
+    // });
 });
 
 // HRD Routes
 Route::middleware(['auth'])->prefix('hrd')->name('hrd.')->group(function () {
-    Route::resource('jadwal-shift', JadwalShiftController::class)->except(['show']);
-    Route::get('/jadwalkerja', [JadwalKerjaController::class, 'index'])->name('jadwalkerja');
+    // Route::resource('jadwal-shift', JadwalShiftController::class)->except(['show']);
+    // Route::get('/jadwalkerja', [JadwalKerjaController::class, 'index'])->name('jadwalkerja');
     
     Route::prefix('dashboard/hrd')->name('dashboard.hrd.')->group(function () {
+        Route::resource('jadwal-shift', JadwalShiftController::class)->except(['show']);
+        Route::get('/jadwalkerja', [JadwalKerjaController::class, 'index'])->name('jadwalkerja');
         Route::get('/kehadiran', [HRDKehadiranController::class, 'index'])->name('kehadiran.index');
         Route::get('/cuti', [ApprovalCutiController::class, 'index'])->name('cuti.index');
         Route::get('/cuti/{pengajuanCuti}', [ApprovalCutiController::class, 'show'])->name('cuti.show');
@@ -124,6 +126,8 @@ Route::middleware(['auth'])->prefix('hrd')->name('hrd.')->group(function () {
         Route::get('/penggajian', [PenggajianController::class, 'index'])->name('penggajian.index');
         Route::post('/penggajian/generate', [PenggajianController::class, 'generate'])->name('penggajian.generate');
         Route::get('/penggajian/{id}/cetak', [PenggajianController::class, 'cetakSlip'])->name('penggajian.cetak');
+        
+        Route::resource('pegawai', App\Http\Controllers\PegawaiController::class);
     });
 });
 

@@ -29,14 +29,14 @@ class JadwalShiftController extends Controller
         $pegawais = Pegawai::orderBy('nama_lengkap')->get();
         $shifts   = Shift::all();
 
-        return view('hrd.jadwal-shift.index', compact('jadwals', 'pegawais', 'shifts', 'bulan', 'tahun'));
+        return view('dashboard.hrd.jadwal-shift.index', compact('jadwals', 'pegawais', 'shifts', 'bulan', 'tahun'));
     }
 
     public function create()
     {
         $pegawais = Pegawai::orderBy('nama_lengkap')->get();
         $shifts   = Shift::all();
-        return view('hrd.jadwal-shift.create', compact('pegawais', 'shifts'));
+        return view('dashboard.hrd.jadwal-shift.create', compact('pegawais', 'shifts'));
     }
 
     public function store(StoreJadwalShiftRequest $request)
@@ -53,7 +53,7 @@ class JadwalShiftController extends Controller
 
         JadwalPegawai::create($request->only(['id_pegawai', 'id_shift', 'tanggal']));
 
-        return redirect()->route('hrd.jadwal-shift.index')
+        return redirect()->route('dashboard.hrd.jadwal-shift.index')
                          ->with('success', 'Jadwal shift berhasil ditambahkan.');
     }
 
@@ -62,7 +62,7 @@ class JadwalShiftController extends Controller
         $jadwal   = JadwalPegawai::findOrFail($id);
         $pegawais = Pegawai::orderBy('nama_lengkap')->get();
         $shifts   = Shift::all();
-        return view('hrd.jadwal-shift.edit', compact('jadwal', 'pegawais', 'shifts'));
+        return view('dashboard.hrd.jadwal-shift.edit', compact('jadwal', 'pegawais', 'shifts'));
     }
 
     public function update(UpdateJadwalShiftRequest $request, string $id)
@@ -82,7 +82,7 @@ class JadwalShiftController extends Controller
 
         $jadwal->update($request->only(['id_pegawai', 'id_shift', 'tanggal']));
 
-        return redirect()->route('hrd.jadwal-shift.index')
+        return redirect()->route('dashboard.hrd.jadwal-shift.index')
                          ->with('success', 'Jadwal shift berhasil diperbarui.');
     }
 
@@ -90,7 +90,7 @@ class JadwalShiftController extends Controller
     {
         JadwalPegawai::findOrFail($id)->delete();
 
-        return redirect()->route('hrd.jadwal-shift.index')
+        return redirect()->route('dashboard.hrd.jadwal-shift.index')
                          ->with('success', 'Jadwal shift berhasil dihapus.');
     }
 }

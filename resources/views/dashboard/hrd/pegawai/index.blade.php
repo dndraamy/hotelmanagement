@@ -1,4 +1,4 @@
-@extends('layouts.inventory')
+@extends('layouts.hrd')
 
 @section('content')
 <div class="max-w-6xl mx-auto space-y-6">
@@ -13,7 +13,7 @@
             </p>
         </div>
         <div>
-            <a href="{{ route('pegawai.create') }}" class="inline-flex items-center gap-2 bg-hotel-dark hover:bg-black text-hotel-gold px-4 py-2 rounded-xl font-medium transition text-sm">
+            <a href="{{ route('hrd.dashboard.hrd.pegawai.create') }}" class="inline-flex items-center gap-2 bg-hotel-dark hover:bg-black text-hotel-gold px-4 py-2 rounded-xl font-medium transition text-sm">
                 <i data-lucide="plus" class="w-4 h-4"></i> Tambah Pegawai
             </a>
         </div>
@@ -40,10 +40,10 @@
                             <td class="p-4 text-stone-600">{{ $p->divisi->nama_divisi ?? '-' }}</td>
                             <td class="p-4 text-stone-600">{{ $p->jabatan->nama_jabatan ?? '-' }}</td>
                             <td class="p-4 flex items-center justify-center gap-2">
-                                <a href="{{ route('pegawai.edit', $p->id_pegawai) }}" class="p-2 text-stone-500 hover:text-amber-500 hover:bg-amber-50 rounded-lg transition" title="Edit">
+                                <a href="{{ route('hrd.dashboard.hrd.pegawai.edit', $p->id_pegawai) }}" class="p-2 text-stone-500 hover:text-amber-500 hover:bg-amber-50 rounded-lg transition" title="Edit">
                                     <i data-lucide="edit-3" class="w-4 h-4"></i>
                                 </a>
-                                <form action="{{ route('pegawai.destroy', $p->id_pegawai) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                <form action="{{ route('hrd.dashboard.hrd.pegawai.destroy', $p->id_pegawai) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="p-2 text-stone-500 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition" title="Hapus">

@@ -37,7 +37,7 @@ class JadwalKerjaController extends Controller
         $pegawais = Pegawai::orderBy('nama_lengkap')->get();
         $divisis = Divisi::orderBy('nama_divisi')->get();
 
-        return view('hrd.jadwalkerja', compact(
+        return view('dashboard.hrd.jadwal-kerja.index', compact(
             'jadwals',
             'pegawais',
             'divisis'
