@@ -10,6 +10,10 @@ class PesananRestoran extends Model
     protected $primaryKey = 'id_pesanan';
     protected $fillable = ['id_reservasi', 'tanggal_pesanan', 'total_harga', 'status_pembayaran', 'status_pesanan'];
 
+    protected $casts = [
+        'tanggal_pesanan' => 'datetime',
+    ];
+
     public function reservasi()
     {
         return $this->belongsTo(Reservasi::class, 'id_reservasi', 'id_reservasi');

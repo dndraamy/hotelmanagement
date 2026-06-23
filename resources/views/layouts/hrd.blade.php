@@ -1,5 +1,5 @@
 @php
-    use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 @endphp
 
 <!DOCTYPE html>
@@ -73,6 +73,15 @@
             border-left: 4px solid #D4AF37;
             color: #D4AF37 !important;
         }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #444;
+            border-radius: 10px;
+        }
     </style>
 </head>
 
@@ -81,97 +90,81 @@
     <div class="flex h-screen overflow-hidden">
 
         <!-- SIDEBAR -->
-        <aside
-            class="w-72 bg-hotel-dark hidden md:flex flex-col justify-between border-r border-stone-800 text-stone-300">
+        <aside class="w-72 bg-hotel-dark hidden md:flex flex-col border-r border-stone-800 text-stone-300 h-screen">
 
-            <div>
-
-                <!-- LOGO -->
-                <div class="p-6 flex flex-col items-center border-b border-stone-800">
-
-                    <img src="{{ asset('logo_hotel.png') }}" alt="RBPL Hotel" class="w-28 h-28 object-contain mb-4">
-
-                    <span class="text-xs font-bold tracking-[0.2em] text-hotel-gold">
-                        RBPL HOTEL
-                    </span>
-
-                    <span class="text-[10px] text-stone-500 uppercase tracking-wider mt-1">
-                        Management System
-                    </span>
-
-                </div>
-
-                <!-- MENU -->
-                <nav class="mt-6 px-4 space-y-2">
-
-                    <p class="text-[10px] uppercase tracking-widest text-stone-500 px-3 mb-3 font-semibold">
-                        Modul Utama
-                    </p>
-
-                    <a href="{{ route('dashboard.hrd') }}"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.index') ? 'sidebar-active' : '' }}">
-
-                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                        <span>Dashboard dan Jadwal</span>
-
-                    </a>
-
-                    <a href="{{ route('dashboard.hrd.kehadiran.index') }}"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.mutasi') ? 'sidebar-active' : '' }}">
-
-                        <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
-                        <span>Absensi Pegawai</span>
-
-                    </a>
-
-                    <a href="{{ route('dashboard.hrd.cuti.index') }}"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.laporan') ? 'sidebar-active' : '' }}">
-
-                        <i data-lucide="history" class="w-4 h-4"></i>
-                        <span>Cuti dan Izin Pegawai</span>
-
-                    </a>
-
-                    <a href="{{ route('dashboard.hrd.penggajian.index') }}"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('dashboard.hrd.penggajian') ? 'sidebar-active' : '' }}">
-
-                        <i data-lucide="banknote" class="w-4 h-4"></i>
-                        <span>Penggajian</span>
-
-                    </a>
-
-                    <form method="POST" action="{{ route('logout') }}" class="w-full mt-2 border-t border-stone-800 pt-2">
-                        @csrf
-                        <button type="submit"
-                            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white">
-
-                            <i data-lucide="log-out" class="w-4 h-4"></i>
-                            <span>Keluar</span>
-
-                        </button>
-                    </form>
-                </nav>
-
+            <div class="p-6 flex flex-col items-center border-b border-stone-800 shrink-0">
+                <img src="{{ asset('logo_hotel.png') }}" alt="RBPL Hotel" class="w-28 h-28 object-contain mb-4">
+                <span class="text-xs font-bold tracking-[0.2em] text-hotel-gold">RBPL HOTEL</span>
+                <span class="text-[10px] text-stone-500 uppercase tracking-wider mt-1">Management System</span>
             </div>
 
-            <!-- USER -->
-            <div class="p-4 border-t border-stone-800 flex items-center gap-3 bg-black/30">
+            <!-- MENU -->
+            <nav class="flex-1 overflow-y-auto mt-6 px-4 space-y-2 custom-scrollbar">
 
-                <div
-                    class="w-10 h-10 rounded-full bg-gradient-to-tr from-hotel-gold to-hotel-goldLight flex items-center justify-center text-hotel-dark font-bold">
+                <p class="text-[10px] uppercase tracking-widest text-stone-500 px-3 mb-3 font-semibold">
+                    Modul Utama
+                </p>
+
+                <a href="{{ route('dashboard.hrd') }}"
+                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('dashboard.hrd') ? 'sidebar-active' : 'text-stone-400 hover:bg-stone-800 hover:text-white' }}">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="{{ route('hrd.dashboard.hrd.pegawai.index') }}"
+                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('hrd.dashboard.hrd.pegawai.*') ? 'sidebar-active' : 'text-stone-400 hover:bg-stone-800 hover:text-white' }}">
+                    <i data-lucide="user" class="w-4 h-4"></i>
+                    <span>Daftar Pegawai</span>
+                </a>
+
+                <a href="{{ route('hrd.dashboard.hrd.kehadiran.index') }}"
+                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('hrd.dashboard.hrd.kehadiran.*') ? 'sidebar-active' : 'text-stone-400 hover:bg-stone-800 hover:text-white' }}">
+                    <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                    <span>Absensi Pegawai</span>
+                </a>
+
+                <a href="{{ route('hrd.dashboard.hrd.jadwal-shift.index') }}"
+                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('hrd.dashboard.hrd.jadwal-shift.*') ? 'sidebar-active' : 'text-stone-400 hover:bg-stone-800 hover:text-white' }}">
+                    <i data-lucide="calendar-clock" class="w-4 h-4"></i>
+                    <span>Jadwal Shift Pegawai</span>
+                </a>
+
+                <a href="{{ route('hrd.dashboard.hrd.jadwalkerja') }}"
+                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('hrd.dashboard.hrd.jadwalkerja') ? 'sidebar-active' : 'text-stone-400 hover:bg-stone-800 hover:text-white' }}">
+                    <i data-lucide="calendar-days" class="w-4 h-4"></i>
+                    <span>Jadwal Kerja Pegawai</span>
+                </a>
+
+                <a href="{{ route('hrd.dashboard.hrd.cuti.index') }}"
+                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('hrd.dashboard.hrd.cuti.*') ? 'sidebar-active' : 'text-stone-400 hover:bg-stone-800 hover:text-white' }}">
+                    <i data-lucide="history" class="w-4 h-4"></i>
+                    <span>Cuti dan Izin Pegawai</span>
+                </a>
+
+                <a href="{{ route('hrd.dashboard.hrd.penggajian.index') }}"
+                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition {{ request()->routeIs('hrd.dashboard.hrd.penggajian.*') ? 'sidebar-active' : 'text-stone-400 hover:bg-stone-800 hover:text-white' }}">
+                    <i data-lucide="banknote" class="w-4 h-4"></i>
+                    <span>Penggajian</span>
+                </a>
+
+                <form method="POST" action="{{ route('logout') }}" class="w-full mt-2 border-t border-stone-800 pt-2">
+                    @csrf
+                    <button type="submit"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <span>Keluar</span>
+                    </button>
+                </form>
+            </nav>
+
+            <div class="p-4 border-t border-stone-800 flex items-center gap-3 bg-black/30 shrink-0">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-hotel-gold to-hotel-goldLight flex items-center justify-center text-hotel-dark font-bold">
                     {{ strtoupper(substr(Auth::user()->username, 0, 2)) }}
                 </div>
-
                 <div>
-                    <h4 class="text-sm font-semibold text-white">
-                        {{ Auth::user()->username }}
-                    </h4>
-
-                    <p class="text-xs text-stone-500">
-                        {{ Auth::user()->role ?? 'HRD' }}
-                    </p>
+                    <h4 class="text-sm font-semibold text-white">{{ Auth::user()->username }}</h4>
+                    <p class="text-xs text-stone-500">{{ Auth::user()->role ?? 'HRD' }}</p>
                 </div>
-
             </div>
 
         </aside>

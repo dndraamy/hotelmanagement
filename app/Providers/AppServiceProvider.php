@@ -21,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        // Tambahkan ini untuk mencegah error pembacaan font macro di framework
+        \Illuminate\Foundation\Vite::macro('fonts', function () {
+            return '';
+        });
+
         View::composer(['layouts.inventory', 'layouts.app'], function ($view) {
 
             $stokMenipisList = Barang::whereColumn(

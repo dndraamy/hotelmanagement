@@ -56,7 +56,6 @@ tailwind.config = {
                 }
             }
         }
-    }
     </script>
 
     <style>
@@ -110,7 +109,7 @@ tailwind.config = {
                 </p>
 
                 <a href="{{ route('kehadiran.index') }}"
-                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.index') ? 'sidebar-active' : '' }}">
+                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('kehadiran.index') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                     <span>Dashboard dan Jadwal</span>
@@ -118,7 +117,7 @@ tailwind.config = {
                 </a>
 
                 <a href="{{ route('kehadiran.index') }}"
-                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.mutasi') ? 'sidebar-active' : '' }}">
+                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('kehadiran.checkin', 'kehadiran.checkout') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
                     <span>Absensi</span>
@@ -126,12 +125,34 @@ tailwind.config = {
                 </a>
 
                 <a href="{{ route('pegawai.cuti.create') }}"
-                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.laporan') ? 'sidebar-active' : '' }}">
+                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('pegawai.cuti.*') ? 'sidebar-active' : '' }}">
 
                     <i data-lucide="history" class="w-4 h-4"></i>
                     <span>Pengajuan Cuti dan Izin</span>
 
                 </a>
+
+                @hasrole('Super Admin|Staf HRD')
+                <a href="{{ route('pegawai.index') }}"
+                   class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('pegawai.index', 'pegawai.create', 'pegawai.edit') ? 'sidebar-active' : '' }}">
+
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    <span>Daftar Pegawai</span>
+
+                </a>
+                @endhasrole
+
+                <form method="POST" action="{{ route('logout') }}" class="w-full mt-2 border-t border-stone-800 pt-2">
+                    @csrf
+                    <button type="submit"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white">
+
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+
+                        <span>Keluar</span>
+
+                    </button>
+                </form>
 
             </nav>
 
@@ -141,16 +162,16 @@ tailwind.config = {
         <div class="p-4 border-t border-stone-800 flex items-center gap-3 bg-black/30">
 
             <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-hotel-gold to-hotel-goldLight flex items-center justify-center text-hotel-dark font-bold">
-                PH
+                {{ strtoupper(substr(Auth::user()->username ?? 'U', 0, 2)) }}
             </div>
 
             <div>
                 <h4 class="text-sm font-semibold text-white">
-                    Pegawai Hotel
+                    {{ Auth::user()->username ?? 'Pegawai' }}
                 </h4>
 
                 <p class="text-xs text-stone-500">
-                    Hotel Management
+                    {{ Auth::user()->roles->first()->name ?? 'Karyawan' }}
                 </p>
             </div>
 

@@ -16,7 +16,7 @@
     {{-- Tab status --}}
     <div class="flex gap-2">
         @foreach (['Pending' => 'yellow', 'Approved' => 'emerald', 'Rejected' => 'red'] as $tab => $color)
-            <a href="{{ route('dashboard.hrd.cuti.index', ['status' => $tab]) }}"
+            <a href="{{ route('hrd.dashboard.hrd.cuti.index', ['status' => $tab]) }}"
                class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold border transition
                       {{ $status === $tab
                           ? 'bg-hotel-dark text-hotel-gold border-hotel-dark'
@@ -65,7 +65,7 @@
                             {{ Str::limit($item->alasan, 40) }}
                         </td>
                         <td class="px-5 py-3">
-                            <a href="{{ route('dashboard.hrd.cuti.show', $item->id_cuti) }}"
+                            <a href="{{ route('hrd.dashboard.hrd.cuti.show', $item->id_cuti) }}"
                                class="text-xs font-semibold text-hotel-gold hover:underline">
                                 Lihat Detail →
                             </a>

@@ -3,7 +3,7 @@
 
 {{-- Back --}}
 <div>
-    <a href="{{ route('dashboard.hrd.cuti.index') }}"
+    <a href="{{ route('hrd.dashboard.hrd.cuti.index') }}"
         class="text-xs text-stone-500 hover:text-hotel-dark flex items-center gap-1 w-fit">
         <i data-lucide="arrow-left" class="w-3 h-3"></i> Kembali ke Daftar
     </a>
@@ -131,7 +131,7 @@
 {{-- Modal Setuju --}}
 <div id="modalSetuju" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4">
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-md">
-        <form method="POST" action="{{ route('dashboard.hrd.cuti.approve', $pengajuanCuti->id_cuti) }}">
+        <form method="POST" action="{{ route('hrd.dashboard.hrd.cuti.approve', $pengajuanCuti->id_cuti) }}">
             @csrf @method('PATCH')
             <div class="p-6 border-b border-stone-100">
                 <h3 class="font-bold text-hotel-dark">Konfirmasi Persetujuan</h3>
@@ -149,7 +149,7 @@
 {{-- Modal Tolak --}}
 <div id="modalTolak" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4">
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-md">
-        <form method="POST" action="{{ route('dashboard.hrd.cuti.reject', $pengajuanCuti->id_cuti) }}">
+        <form method="POST" action="{{ route('hrd.dashboard.hrd.cuti.reject', $pengajuanCuti->id_cuti) }}">
             @csrf @method('PATCH')
             <div class="p-6 border-b border-stone-100">
                 <h3 class="font-bold text-hotel-dark">Konfirmasi Penolakan</h3>
