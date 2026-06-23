@@ -27,6 +27,12 @@
                         Kas & Penagihan
                     </x-nav-link>
                     @endhasrole
+
+                    @hasrole('Manajer Hotel')
+                    <x-nav-link :href="route('manajer.laporan-keuangan.index')" :active="request()->routeIs('manajer.laporan-keuangan.*')">
+                        Laporan Keuangan
+                    </x-nav-link>
+                    @endhasrole 
                 </div>
             </div>
 
@@ -84,6 +90,12 @@
                 Kas & Penagihan
             </x-responsive-nav-link>
             @endhasrole
+
+            @hasrole('Manajer Hotel')
+            <x-responsive-nav-link :href="route('manajer.laporan-keuangan.index')" :active="request()->routeIs('manajer.laporan-keuangan.*')">
+                Laporan Keuangan
+            </x-responsive-nav-link>
+            @endhasrole 
         </div>
 
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
