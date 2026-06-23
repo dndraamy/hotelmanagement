@@ -1,4 +1,4 @@
-@extends('layouts.kas')
+@extends(auth()->user()->hasRole('Manajer Hotel') ? 'layouts.manajer' : 'layouts.kas')
 
 @section('content')
 <div class="max-w-2xl mx-auto">

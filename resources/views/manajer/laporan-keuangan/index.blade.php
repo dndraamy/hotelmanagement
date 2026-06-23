@@ -1,41 +1,40 @@
-<x-app-layout>
-    <head>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-        <style>
-            .wrap { background:#FAF9F6; min-height:100vh; padding:2rem; font-family:'Montserrat',sans-serif; color:#2D2D2D; }
-            .card { background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.07); padding:1.5rem; margin-bottom:1.5rem; }
-            .page-title { font-size:1.5rem; font-weight:700; color:#1A1A1A; }
-            .page-sub { font-size:0.85rem; color:#888; margin-bottom:1.5rem; }
-            .filter-bar { display:flex; gap:0.75rem; flex-wrap:wrap; align-items:flex-end; margin-bottom:1.5rem; }
-            .filter-label { font-size:0.78rem; font-weight:600; color:#888; margin-bottom:0.25rem; display:block; text-transform:uppercase; letter-spacing:0.04em; }
-            .filter-bar select { border:1.5px solid #e2e0d8; border-radius:8px; padding:0.45rem 0.85rem; font-family:'Montserrat',sans-serif; font-size:0.85rem; color:#2D2D2D; background:#FAF9F6; }
-            .btn-gold { background:#D4AF37; color:#1A1A1A; font-weight:600; padding:0.5rem 1.25rem; border-radius:8px; border:none; cursor:pointer; font-size:0.9rem; font-family:'Montserrat',sans-serif; }
-            .summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.5rem; }
-            .summary-card { border-radius:12px; padding:1.25rem 1.5rem; }
-            .summary-card.green { background:#f0fdf4; border:1px solid #86efac; }
-            .summary-card.red { background:#fff5f5; border:1px solid #feb2b2; }
-            .summary-card.blue { background:#eff6ff; border:1px solid #93c5fd; }
-            .summary-label { font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem; }
-            .summary-card.green .summary-label { color:#166534; }
-            .summary-card.red .summary-label { color:#991b1b; }
-            .summary-card.blue .summary-label { color:#1e40af; }
-            .summary-value { font-size:1.3rem; font-weight:700; }
-            .summary-card.green .summary-value { color:#15803d; }
-            .summary-card.red .summary-value { color:#dc2626; }
-            .summary-card.blue .summary-value { color:#2563eb; }
-            .section-title { font-size:1rem; font-weight:700; color:#1A1A1A; margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:2px solid #D4AF37; display:inline-block; }
-            table { width:100%; border-collapse:collapse; font-size:0.88rem; }
-            thead tr { background:#1A1A1A; color:#D4AF37; }
-            thead th { padding:0.75rem 1rem; text-align:left; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em; }
-            tbody tr { border-bottom:1px solid #f0ede6; }
-            tbody tr:hover { background:#fdf8ef; }
-            tbody td { padding:0.75rem 1rem; }
-            .text-right { text-align:right; }
-            .badge-in { background:#f0fdf4; color:#166534; border-radius:20px; padding:0.2rem 0.75rem; font-size:0.78rem; font-weight:600; }
-            .badge-out { background:#fff5f5; color:#991b1b; border-radius:20px; padding:0.2rem 0.75rem; font-size:0.78rem; font-weight:600; }
-            .empty { text-align:center; color:#aaa; padding:2rem; font-size:0.88rem; }
-        </style>
-    </head>
+@extends('layouts.manajer')
+
+@section('content')
+<style>
+    .wrap { padding:0; font-family:'Montserrat',sans-serif; color:#2D2D2D; }
+    .card { background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.07); padding:1.5rem; margin-bottom:1.5rem; }
+    .page-title { font-size:1.5rem; font-weight:700; color:#1A1A1A; }
+    .page-sub { font-size:0.85rem; color:#888; margin-bottom:1.5rem; }
+    .filter-bar { display:flex; gap:0.75rem; flex-wrap:wrap; align-items:flex-end; margin-bottom:1.5rem; }
+    .filter-label { font-size:0.78rem; font-weight:600; color:#888; margin-bottom:0.25rem; display:block; text-transform:uppercase; letter-spacing:0.04em; }
+    .filter-bar select { border:1.5px solid #e2e0d8; border-radius:8px; padding:0.45rem 0.85rem; font-family:'Montserrat',sans-serif; font-size:0.85rem; color:#2D2D2D; background:#FAF9F6; }
+    .btn-gold { background:#D4AF37; color:#1A1A1A; font-weight:600; padding:0.5rem 1.25rem; border-radius:8px; border:none; cursor:pointer; font-size:0.9rem; font-family:'Montserrat',sans-serif; }
+    .summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.5rem; }
+    .summary-card { border-radius:12px; padding:1.25rem 1.5rem; }
+    .summary-card.green { background:#f0fdf4; border:1px solid #86efac; }
+    .summary-card.red { background:#fff5f5; border:1px solid #feb2b2; }
+    .summary-card.blue { background:#eff6ff; border:1px solid #93c5fd; }
+    .summary-label { font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem; }
+    .summary-card.green .summary-label { color:#166534; }
+    .summary-card.red .summary-label { color:#991b1b; }
+    .summary-card.blue .summary-label { color:#1e40af; }
+    .summary-value { font-size:1.3rem; font-weight:700; }
+    .summary-card.green .summary-value { color:#15803d; }
+    .summary-card.red .summary-value { color:#dc2626; }
+    .summary-card.blue .summary-value { color:#2563eb; }
+    .section-title { font-size:1rem; font-weight:700; color:#1A1A1A; margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:2px solid #D4AF37; display:inline-block; }
+    table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+    thead tr { background:#1A1A1A; color:#D4AF37; }
+    thead th { padding:0.75rem 1rem; text-align:left; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em; }
+    tbody tr { border-bottom:1px solid #f0ede6; }
+    tbody tr:hover { background:#fdf8ef; }
+    tbody td { padding:0.75rem 1rem; }
+    .text-right { text-align:right; }
+    .badge-in { background:#f0fdf4; color:#166534; border-radius:20px; padding:0.2rem 0.75rem; font-size:0.78rem; font-weight:600; }
+    .badge-out { background:#fff5f5; color:#991b1b; border-radius:20px; padding:0.2rem 0.75rem; font-size:0.78rem; font-weight:600; }
+    .empty { text-align:center; color:#aaa; padding:2rem; font-size:0.88rem; }
+</style>
 
     <div class="wrap">
         <div class="page-title">Laporan Keuangan Hotel</div>
@@ -174,4 +173,4 @@
             @endif
         </div>
     </div>
-</x-app-layout>
+@endsection

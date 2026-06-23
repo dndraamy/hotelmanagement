@@ -19,14 +19,13 @@ use App\Http\Controllers\PenggabunganTagihanController;
 use App\Http\Controllers\Manajer\LaporanKeuanganController;
 use App\Http\Controllers\PegawaiController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Manajer\LaporanKeuanganController; 
 
 Route::get('/', fn () => redirect()->route('login'));
 
 // Middleware Auth
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
-    Route::get('/dashboard/manager', fn () => view('dashboard'))->middleware('role:Manajer Hotel')->name('dashboard.manager');
+    Route::get('/dashboard/manager', [LaporanKeuanganController::class, 'dashboard'])->middleware('role:Manajer Hotel')->name('dashboard.manager');
     Route::get('/dashboard/receptionist', fn () => view('dashboard'))->middleware('role:Resepsionis')->name('dashboard.receptionist');
     Route::get('/dashboard/finance', fn () => view('dashboard'))->middleware('role:Staf Keuangan')->name('dashboard.finance');
     Route::get('/dashboard/restaurant', fn () => view('dashboard'))->middleware('role:Petugas Restoran')->name('dashboard.restaurant');

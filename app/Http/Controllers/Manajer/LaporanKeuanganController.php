@@ -9,6 +9,26 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanKeuanganController extends Controller
 {
+    public function dashboard()
+    {
+        $tahun = now()->year;
+        
+        // Data per bulan untuk tabel ringkasan bulanan (Tahunan)
+        $ringkasanTahunan = DB::table('transaksi_kas')
+            ->select(
+                DB::raw('MONTH(tanggal_transaksi) as bulan'),
+                DB::raw('SUM(CASE WHEN tipe_transaksi = "Pemasukan" THEN nominal ELSE 0 END) as total_pendapatan'),
+                DB::raw('SUM(CASE WHEN tipe_transaksi = "Pengeluaran" THEN nominal ELSE 0 END) as total_pengeluaran'),
+                DB::raw('SUM(CASE WHEN tipe_transaksi = "Pemasukan" THEN nominal ELSE 0 END) - SUM(CASE WHEN tipe_transaksi = "Pengeluaran" THEN nominal ELSE 0 END) as selisih')
+            )
+            ->whereYear('tanggal_transaksi', $tahun)
+            ->groupBy(DB::raw('MONTH(tanggal_transaksi)'))
+            ->orderBy(DB::raw('MONTH(tanggal_transaksi)'))
+            ->get();
+
+        return view('dashboard.manajer', compact('ringkasanTahunan', 'tahun'));
+    }
+
     public function index(Request $request)
     {
         $bulan = $request->filled('bulan') ? $request->bulan : now()->month;

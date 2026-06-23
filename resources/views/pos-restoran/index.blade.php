@@ -689,8 +689,13 @@
         <span>
             <strong>{{ now()->isoFormat('dddd, D MMMM Y') }}</strong>
         </span>
-        <span>Petugas: <strong>{{ auth()->user()->name ?? 'Restoran' }}</strong></span>
-        <a href="{{ route('dashboard') }}">← Dashboard</a>
+        <span>Petugas: <strong>{{ auth()->user()->username ?? 'Restoran' }}</strong></span>
+        <form method="POST" action="{{ route('logout') }}" class="inline">
+            @csrf
+            <button type="submit" style="color: white; font-weight: 600; cursor: pointer; border: none; background: transparent; font-size: 14px;">
+                ← Keluar
+            </button>
+        </form>
     </div>
 </div>
 

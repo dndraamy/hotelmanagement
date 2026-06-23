@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
             'Staf HRD' => 'dashboard.hrd',
             'Karyawan' => 'kehadiran.index',
             'Staf Gudang' => 'inventory.index',
-            'Super Admin' => 'pegawai.index',
+            'Super Admin' => 'hrd.dashboard.hrd.pegawai.index',
             default => 'dashboard',
         };
         return redirect()->intended(route($redirectRoute, absolute: false));
