@@ -2,14 +2,14 @@
     <head>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
         <style>
-            .wrap { background:#FAF9F6; min-height:100vh; padding:2rem; font-family:'Montserrat',sans-serif; color:#2D2D2D; }
+            .wrap { width: 100%; max-width: 1280px; margin: 0 auto; padding: 1.5rem; font-family: 'Montserrat', sans-serif; color: #2D2D2D; }
             .card { background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.07); padding:1.5rem; margin-bottom:1.5rem; }
             .page-title { font-size:1.5rem; font-weight:700; color:#1A1A1A; }
             .page-sub { font-size:0.85rem; color:#888; margin-bottom:1.5rem; }
-            .filter-bar { display:flex; gap:0.75rem; flex-wrap:wrap; align-items:flex-end; margin-bottom:1.5rem; }
+            .filter-bar { display:flex; gap:1rem; flex-wrap:wrap; align-items:flex-end; margin-bottom:1.5rem; }
             .filter-label { font-size:0.78rem; font-weight:600; color:#888; margin-bottom:0.25rem; display:block; text-transform:uppercase; letter-spacing:0.04em; }
-            .filter-bar select { border:1.5px solid #e2e0d8; border-radius:8px; padding:0.45rem 0.85rem; font-family:'Montserrat',sans-serif; font-size:0.85rem; color:#2D2D2D; background:#FAF9F6; }
-            .btn-gold { background:#D4AF37; color:#1A1A1A; font-weight:600; padding:0.5rem 1.25rem; border-radius:8px; border:none; cursor:pointer; font-size:0.9rem; font-family:'Montserrat',sans-serif; }
+            .filter-bar select { border:1.5px solid #e2e0d8; border-radius:8px; padding:0.45rem 0.85rem; font-family:'Montserrat',sans-serif; font-size:0.85rem; color:#2D2D2D; background:#fff; }
+            .btn-gold { background:#D4AF37; color:#1A1A1A; font-weight:600; padding:0.5rem 1.25rem; border-radius:8px; border:none; cursor:pointer; font-size:0.9rem; font-family:'Montserrat',sans-serif; display:inline-block; margin-right:0.5rem; }
             .summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.5rem; }
             .summary-card { border-radius:12px; padding:1.25rem 1.5rem; }
             .summary-card.green { background:#f0fdf4; border:1px solid #86efac; }
@@ -64,11 +64,11 @@
                 </div>
                 <div style="padding-top:1.3rem;">
                     <button type="submit" class="btn-gold">Tampilkan</button>
-                     <a href="{{ route('manajer.laporan-keuangan.export-pdf', ['bulan' => $bulan,'tahun' => $tahun]) }}"
+                    <a href="{{ route('manajer.laporan-keuangan.export-pdf', ['bulan' => $bulan,'tahun' => $tahun]) }}"
                         class="btn-gold"
                         style="text-decoration:none;">
-                           Download Laporan PDF
-                     </a>
+                        Download Laporan PDF
+                    </a>
                 </div>
             </div>
         </form>

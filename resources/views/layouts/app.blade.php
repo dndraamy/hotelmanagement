@@ -77,7 +77,8 @@
                     </span>
 
                     <span class="text-[9px] text-stone-500 uppercase tracking-wider mt-1">
-                        Inventory Management
+                        @role('Staf Gudang') Inventory Management @endrole
+                        @role('Manajer Hotel') Management & Report @endrole
                     </span>
 
                 </div>
@@ -89,6 +90,7 @@
                         Modul Utama
                     </p>
 
+                @role('Staf Gudang')
                     <a href="{{ route('inventory.index') }}"
                         class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('inventory.index') ? 'sidebar-active' : '' }}">
 
@@ -140,6 +142,18 @@
                         <span>Jadwal Kerja</span>
 
                     </a>
+                @endrole
+
+                @role('Manajer Hotel') 
+                    <a href="{{ route('manajer.laporan-keuangan.index') }}"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('manajer.laporan-keuangan.*') ? 'sidebar-active' : '' }}">
+            
+                        <i data-lucide="file-bar-chart" class="w-4 h-4 text-hotel-gold"></i>
+            
+                        <span>Laporan Keuangan</span>
+                    
+                    </a>
+                @endrole 
 
                     <form method="POST" action="{{ route('logout') }}" class="w-full mt-2 border-t border-stone-800 pt-2">
                         @csrf
@@ -161,16 +175,19 @@
             <div class="p-4 border-t border-stone-800 flex items-center space-x-3 bg-stone-950/40">
 
                 <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-hotel-gold to-hotel-goldLight flex items-center justify-center text-hotel-dark font-bold text-sm">
-                    SG
+                    @role('Staf Gudang') SG @endrole
+                    @role('Manajer Hotel') MN @endrole
                 </div>
 
                 <div>
                     <h4 class="text-xs font-semibold text-white">
-                        Staf Gudang
+                        @role('Staf Gudang') Staf Gudang @endrole
+                        @role('Manajer Hotel') Manajer Hotel @endrole
                     </h4>
 
                     <p class="text-[10px] text-stone-500">
-                        Inventory Officer
+                        @role('Staf Gudang') Inventory Officer @endrole
+                        @role('Manajer Hotel') Hotel General Manager @endrole
                     </p>
                 </div>
 
@@ -183,79 +200,20 @@
 
             <!-- HEADER -->
             <header class="bg-white border-b border-stone-200 px-6 py-4 flex items-center justify-between sticky top-0 z-40">
-
+                
                 <div>
                     <h2 class="text-sm font-bold text-hotel-dark uppercase tracking-wider">
                         RBPL Hotel
                     </h2>
-
-                        @if(isset($totalWarning) && $totalWarning ?? 0> 0)
-                            <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
-                            @endif
-
-                        </button>
-
-                        <div id="notifDropdown"
-                            class="hidden absolute right-0 mt-3 w-96 bg-white border border-stone-200 rounded-2xl shadow-xl">
-
-                            <div class="p-4 border-b">
-
-                                <h3 class="font-bold text-sm">
-                                    Peringatan Stok Minimum
-                                </h3>
-
-                            <p class="text-xs text-stone-500">
-                                {{ $totalWarning ?? 0?? 0 }} item membutuhkan restock
-                            </p>
-
-                            </div>
-
-                            <div class="max-h-80 overflow-y-auto">
-
-                            @forelse($stokMenipisList ?? [] as $item)
-
-                                <div class="p-4 border-b hover:bg-stone-50">
-
-                                    <h4 class="font-semibold text-sm">
-                                        {{ $item->nama_barang }}
-                                    </h4>
-
-                                    <p class="text-xs text-red-600 mt-1">
-                                        Stok tersisa:
-                                        {{ $item->stok_sekarang }}
-                                        {{ $item->satuan }}
-                                    </p>
-
-                                </div>
-
-                                @empty
-
-                                <div class="p-6 text-center">
-
-                                    <i data-lucide="shield-check"
-                                        class="w-8 h-8 text-emerald-500 mx-auto mb-2"></i>
-
-                                    <p class="text-sm text-stone-500">
-                                        Semua stok aman
-                                    </p>
-
-                                </div>
-
-                                @endforelse
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                </div> 
 
                     <!-- LIVE SERVER -->
-                    <span class="text-xs font-semibold text-stone-700 bg-hotel-bg border border-stone-200 px-3 py-1.5 rounded-full flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        Live Server
-                    </span>
-
-                </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-semibold text-stone-700 bg-hotel-bg border border-stone-200 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            Live Server
+                        </span>
+                    </div> 
 
             </header>
 

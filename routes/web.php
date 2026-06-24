@@ -18,8 +18,7 @@ use App\Http\Controllers\TransaksiKasController;
 use App\Http\Controllers\PenggabunganTagihanController;
 use App\Http\Controllers\Manajer\LaporanKeuanganController;
 use App\Http\Controllers\PegawaiController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Manajer\LaporanKeuanganController; 
+use Illuminate\Support\Facades\Route; 
 
 Route::get('/', fn () => redirect()->route('login'));
 
