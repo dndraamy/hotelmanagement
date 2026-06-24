@@ -81,6 +81,16 @@
                         <i data-lucide="log-in" class="w-4 h-4"></i>
                         <span>Check-In / Check-Out</span>
                     </a>
+
+                    <form method="POST" action="{{ route('logout') }}" class="w-full mt-2 border-t border-stone-800 pt-2">
+                        @csrf
+                        <button type="submit"
+                            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            <span>Keluar</span>
+                        </button>
+                    </form>
+                    
                 </nav>
             </div>
 
@@ -110,10 +120,10 @@
                         <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
                         Live Server
                     </span>
-                    <form method="POST" action="{{ route('logout') }}">
+                    <!-- <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="text-xs text-stone-500 hover:text-red-500 transition">Logout</button>
-                    </form>
+                    </form> -->
                 </div>
             </header>
 

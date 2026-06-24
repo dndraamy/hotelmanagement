@@ -56,7 +56,6 @@ tailwind.config = {
                 }
             }
         }
-    }
     </script>
 
     <style>
@@ -103,24 +102,37 @@ tailwind.config = {
             </div>
 
             <!-- MENU -->
-         <p class="text-[10px] uppercase tracking-widest text-stone-500 px-3 mb-3 font-semibold mt-6">
-         Modul Keuangan
-        </p>
+             <nav class="mt-6 px-4 space-y-2">
+                    <p class="text-[10px] uppercase tracking-widest text-stone-500 px-3 mb-3 font-semibold">Modul Keuangan</p>
 
-        <a href="{{ route('kas.pemasukan') }}" class="...">
-         <i data-lucide="trending-up" class="w-4 h-4"></i> <span>Input Pemasukan</span>
-        </a>
+                    <a href="{{ route('kas.pemasukan') }}"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('kas.pemasukan') ? 'sidebar-active' : '' }}">
+                        <i data-lucide="trending-up" class="w-4 h-4"></i>
+                        <span>Input Pemasukan</span>
+                    </a>
 
-        <a href="{{ route('kas.pengeluaran') }}" class="...">
-      <i data-lucide="trending-down" class="w-4 h-4"></i> <span>Input Pengeluaran</span>
-        </a>
+                    <a href="{{ route('kas.pengeluaran') }}"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('kas.pengeluaran') ? 'sidebar-active' : '' }}">
+                        <i data-lucide="trending-down" class="w-4 h-4"></i>
+                        <span>Input Pengeluaran</span>
+                    </a>
 
-        <a href="{{ route('penggabungan-tagihan.index') }}" class="...">
-         <i data-lucide="trending-up" class="w-4 h-4"></i> <span>Penggabungan Tagihan</span>
-        </a>
+                    <a href="{{ route('penggabungan-tagihan.index') }}"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white {{ request()->routeIs('penggabungan-tagihan.index') ? 'sidebar-active' : '' }}">
+                        <i data-lucide="trending-down" class="w-4 h-4"></i>
+                        <span>Penggabungan Tagihan</span>
+                    </a>
 
-
-
+                    <form method="POST" action="{{ route('logout') }}" class="w-full mt-2 border-t border-stone-800 pt-2">
+                        @csrf
+                        <button type="submit"
+                            class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition text-stone-400 hover:bg-stone-800 hover:text-white">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            <span>Keluar</span>
+                        </button>
+                    </form>
+                    
+                </nav>
         </div>
 
         <!-- USER -->
