@@ -50,7 +50,7 @@ class ApprovalCutiController extends Controller
         ]);
 
         return redirect()
-            ->route('dashboard.hrd.cuti.index', ['status' => 'Pending'])
+            ->route('hrd.dashboard.hrd.cuti.index', ['status' => 'Pending'])
             ->with('success', "Pengajuan cuti {$pengajuanCuti->pegawai->nama_lengkap} disetujui.");
     }
 
@@ -67,7 +67,7 @@ class ApprovalCutiController extends Controller
         ]);
 
         return redirect()
-            ->route('dashboard.hrd.cuti.index', ['status' => 'Pending'])
+            ->route('hrd.dashboard.hrd.cuti.index', ['status' => 'Pending'])
             ->with('success', "Pengajuan cuti {$pengajuanCuti->pegawai->nama_lengkap} ditolak.");
     }
 }

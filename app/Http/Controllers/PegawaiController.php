@@ -6,6 +6,7 @@ use App\Models\Pegawai;
 use App\Models\Divisi;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PegawaiController extends Controller
 {
@@ -69,7 +70,14 @@ class PegawaiController extends Controller
 
     public function destroy(Pegawai $pegawai)
     {
-        $pegawai->delete();
+        DB::transaction(function () use ($pegawai) {
+            $pegawai->user()->delete();
+            $pegawai->jadwalPegawai()->delete();
+            $pegawai->kehadiran()->delete();
+            $pegawai->pengajuanCuti()->delete();
+            $pegawai->penggajian()->delete();
+            $pegawai->delete();
+        });
 
         return redirect()->route('hrd.dashboard.hrd.pegawai.index')->with('success', 'Data pegawai berhasil dihapus.');
     }

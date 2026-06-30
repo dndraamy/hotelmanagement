@@ -53,7 +53,7 @@ class JadwalShiftController extends Controller
 
         JadwalPegawai::create($request->only(['id_pegawai', 'id_shift', 'tanggal']));
 
-        return redirect()->route('dashboard.hrd.jadwal-shift.index')
+        return redirect()->route('hrd.dashboard.hrd.jadwal-shift.index')
                          ->with('success', 'Jadwal shift berhasil ditambahkan.');
     }
 
