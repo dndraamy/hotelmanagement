@@ -51,6 +51,24 @@ class DatabaseSeeder extends Seeder
                 'id_jabatan' => 1,
             ],
         ]);
+        
+        // ==================================
+        // TIPE KAMAR & KAMAR
+        // ==================================
+
+        DB::table('tipe_kamar')->insertOrIgnore([
+            ['id_tipe' => 1, 'nama_tipe' => 'Standard', 'harga_per_malam' => 350000, 'created_at' => now(), 'updated_at' => now()],
+            ['id_tipe' => 2, 'nama_tipe' => 'Deluxe',   'harga_per_malam' => 600000, 'created_at' => now(), 'updated_at' => now()],
+            ['id_tipe' => 3, 'nama_tipe' => 'Suite',     'harga_per_malam' => 950000, 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
+        DB::table('kamar')->insertOrIgnore([
+            ['id_kamar' => 1, 'nomor_kamar' => '101', 'lantai' => 1, 'id_tipe' => 1, 'status_kamar' => 'Kosong', 'created_at' => now(), 'updated_at' => now()],
+            ['id_kamar' => 2, 'nomor_kamar' => '102', 'lantai' => 1, 'id_tipe' => 1, 'status_kamar' => 'Kosong', 'created_at' => now(), 'updated_at' => now()],
+            ['id_kamar' => 3, 'nomor_kamar' => '201', 'lantai' => 2, 'id_tipe' => 2, 'status_kamar' => 'Kosong', 'created_at' => now(), 'updated_at' => now()],
+            ['id_kamar' => 4, 'nomor_kamar' => '301', 'lantai' => 3, 'id_tipe' => 3, 'status_kamar' => 'Kosong', 'created_at' => now(), 'updated_at' => now()],
+            ['id_kamar' => 5, 'nomor_kamar' => '302', 'lantai' => 3, 'id_tipe' => 3, 'status_kamar' => 'Kosong', 'created_at' => now(), 'updated_at' => now()],
+        ]);
 
         // ==================================
         // ROLES
