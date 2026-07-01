@@ -82,7 +82,7 @@ class JadwalShiftController extends Controller
 
         $jadwal->update($request->only(['id_pegawai', 'id_shift', 'tanggal']));
 
-        return redirect()->route('dashboard.hrd.jadwal-shift.index')
+        return redirect()->route('hrd.dashboard.hrd.jadwal-shift.index')
                          ->with('success', 'Jadwal shift berhasil diperbarui.');
     }
 
@@ -90,7 +90,7 @@ class JadwalShiftController extends Controller
     {
         JadwalPegawai::findOrFail($id)->delete();
 
-        return redirect()->route('dashboard.hrd.jadwal-shift.index')
+        return redirect()->route('hrd.dashboard.hrd.jadwal-shift.index')
                          ->with('success', 'Jadwal shift berhasil dihapus.');
     }
 }
